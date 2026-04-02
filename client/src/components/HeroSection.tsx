@@ -14,7 +14,7 @@ export default function HeroSection() {
 
     return(
         <>
-            <div className="flex w-full gap-x-5">
+            <div className="flex w-full gap-x-5 animate-fade-up">
                 <img src={MyProfile} alt="My Profile" className="w-[160px] h-[160px] object-cover" />
                 
                 <div className="flex flex-col w-full pr-5 gap-y-1">

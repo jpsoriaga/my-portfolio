@@ -17,7 +17,7 @@ export default function MainPage() {
                 </div>
 
                 <div className="flex flex-col bg-yellow-100 order-3">
-                    <span className="order-3 max-w-[280px]">
+                    <span className="order-3 max-w-[280px] animate-fade-up animate-duration-1300">
                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quod ullam adipisci deleniti animi vel, quibusdam mollitia aut beatae sapiente. Eum obcaecati eaque expedita sed iure nostrum libero magnam odio! Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi aut qui sunt. Harum ducimus quidem quae temporibus iure distinctio magnam assumenda quo reiciendis cupiditate rerum, voluptatem excepturi commodi tempore tenetur.
                 </span>
                 </div>
