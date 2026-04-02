@@ -3,7 +3,7 @@ export default function EducationSection() {
         { title: "BS Information Technology", school: "Bulacan State University", year: "2028", active: true },
         { title: "Senior High School", school: "La Consolacion University Philippines", year: "2023" },
         { title: "High School", school: "Bajet Castillo High School", year: "2021" },
-        { title: "Elementary", school: "Sto. Cristo Elementary School", year: "2018" },
+        { title: "Elementary School", school: "Sto. Cristo Elementary School", year: "2018" },
     ];
 
     return (
