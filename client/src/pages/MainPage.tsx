@@ -1,6 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
-import TechStack from "../components/TechStack";
+import TechStack from "../components/TeckStackSection";
 
 export default function MainPage() {
     return (
