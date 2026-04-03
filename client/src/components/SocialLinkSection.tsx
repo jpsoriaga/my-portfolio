@@ -3,8 +3,14 @@ import Instagram from "../assets/instagram.png"
 import GitHubWhite from "../assets/github-white.png"
 import InstagramWhite from "../assets/instagram-white.png"
 import { ChevronRight } from 'lucide-react';
+import { useEffect } from "react";
 
 export default function SocialLinkSection({ dark }: { dark: boolean }) {
+
+    useEffect(()=> {
+        document.title = "John Patrick Soriaga - Portfolio";
+    }, []);
+
     return (
         <>
             <div className="dark-bg-container hover:-translate-y-2 shadow-xs-bottom max-w-[280px] p-4 animate-fade-up">
