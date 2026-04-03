@@ -9,7 +9,7 @@ export default function CertificateSection() {
 
     const CertificationCard = ({ title, location }: CertificateInfo) => {
         return(
-            <button className="shadow-xs-bottom flex items-center justify-between p-2">
+            <button className="transition-all duration-400 ease-out hover:-translate-y-1 hover:shadow-sm shadow-xs-bottom flex items-center justify-between p-2">
                 <div className="flex flex-col items-start">
                     <h3 className="text-sm font-medium mb-1.5">{title}</h3>
                     <p className="text-xs">{location}</p>
