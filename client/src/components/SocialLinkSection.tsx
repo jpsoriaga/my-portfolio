@@ -1,35 +1,37 @@
 import GitHub from "../assets/github.png"
 import Instagram from "../assets/instagram.png"
+import GitHubWhite from "../assets/github-white.png"
+import InstagramWhite from "../assets/instagram-white.png"
 import { ChevronRight } from 'lucide-react';
 
-export default function SocialLinkSection() {
+export default function SocialLinkSection({ dark }: { dark: boolean }) {
     return (
         <>
-            <div className="shadow-xs-bottom max-w-[280px] p-4 animate-fade-up">
-                <h1 className="text-lg font-semibold mb-3">Social Links</h1>
+            <div className="dark-bg-container hover:-translate-y-2 shadow-xs-bottom max-w-[280px] p-4 animate-fade-up">
+                <h1 className="dark:text-white text-lg font-semibold mb-3">Social Links</h1>
 
                 <div className="flex flex-col gap-y-5">
-                    <button className="flex cursor-pointer items-center justify-between">
+                    <button onClick={() => window.open("https://github.com/jpsoriaga", "_blank")} className="flex cursor-pointer items-center justify-between">
                         <div className="flex items-center gap-x-2">
-                        <img src={GitHub} alt="GitHub" className="w-9 h-9 object-cover" />
+                        <img src={dark ? GitHubWhite : GitHub} alt="GitHub" className="w-9 h-9 object-cover" />
                         <div className="flex items-start flex-col">
-                            <span className="text-sm font-medium">GitHub</span>
-                            <span className="text-xs">@jpsoriaga</span>
+                            <span className=" dark:text-white text-sm font-medium">GitHub</span>
+                            <span className="dark:text-white text-xs">@jpsoriaga</span>
                         </div>
                     </div>
-                    <ChevronRight size={16} />
+                    <ChevronRight className="dark:text-white" size={16} />
                     </button>
 
 
-                    <button className="flex cursor-pointer items-center justify-between">
+                    <button onClick={() => window.open("https://www.instagram.com/jpsoriaga_/", "_blank")} className="flex cursor-pointer items-center justify-between">
                         <div className="flex items-center gap-x-2">
-                            <img src={Instagram} alt="Instagram" className="w-9 h-9 object-cover" />
+                            <img src={dark ? InstagramWhite : Instagram} alt="Instagram" className="w-9 h-9 object-cover" />
                             <div className="flex items-start flex-col">
-                                <span className="text-sm font-medium">Instagram</span>
-                                <span className="text-xs">@jpsoriaga_</span>
+                                <span className=" dark:text-white text-sm font-medium">Instagram</span>
+                                <span className="dark:text-white text-xs">@jpsoriaga_</span>
                             </div>
                         </div>
-                        <ChevronRight size={16} />
+                        <ChevronRight className="dark:text-white" size={16} />
                     </button>
                     </div>
 

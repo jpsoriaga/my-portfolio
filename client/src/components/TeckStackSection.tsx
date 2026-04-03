@@ -4,27 +4,27 @@ export default function TechStackSection() {
 
     const TechStackCard = ({ techStack }: { techStack: string }) => {
         return (
-            <div className="shadow-xs py-2 px-3 rounded-xs flex items-center justify-center">
-                <span className="text-xs">{techStack}</span>
+            <div className=" shadow-xs py-2 px-3 rounded-xs flex items-center justify-center">
+                <span className=" dark:text-white text-xs">{techStack}</span>
             </div>
         );
     }
 
     return (
         <>
-            <div className="animate-fade-up shadow-xs-bottom p-4">
+            <div className="dark-bg-container animate-fade-up shadow-xs-bottom p-4">
                 <div className="flex items-center justify-between ">
-                    <h1 className="text-lg font-semibold">Tech Stack</h1>
+                    <h1 className="dark:text-white text-lg font-semibold">Tech Stack</h1>
 
                     <button className="flex items-center justify-center gap-x-1 cursor-pointer">
-                        <span className="text-xs">View All</span>
+                        <span className="dark:text-white text-xs">View All</span>
                         <ChevronRight size={14} />
                     </button>
 
                 </div>
 
                 <div className="flex flex-col gap-y-3.5 mb-4 mt-3">
-                    <h2 className="text-sm font-semibold">Frontend</h2>
+                    <h2 className="dark:text-white text-sm font-semibold">Frontend</h2>
                     <div className="flex gap-x-2">
                         <TechStackCard techStack="JavaScript" />
                         <TechStackCard techStack="TypeScript" />
@@ -32,7 +32,7 @@ export default function TechStackSection() {
                         <TechStackCard techStack="Tailwind CSS" />
                     </div>
 
-                    <h2 className="text-sm font-semibold mt-2">Backend</h2>
+                    <h2 className="dark:text-white text-sm font-semibold mt-2">Backend</h2>
                     <div className="flex gap-x-2">
                         <TechStackCard techStack="Node.js" />
                         <TechStackCard techStack="Express.js" />
@@ -42,7 +42,7 @@ export default function TechStackSection() {
                         <TechStackCard techStack="MySQL" />
                     </div>
 
-                    <h2 className="text-sm font-semibold mt-2">Developer Tools</h2>
+                    <h2 className="dark:text-white text-sm font-semibold mt-2">Developer Tools</h2>
                     <div className="flex gap-x-2">
                         <TechStackCard techStack="Git" />
                         <TechStackCard techStack="GitHub" />

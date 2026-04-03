@@ -4,11 +4,25 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+body {
+  @apply bg-white dark:bg-black;
+}
+
 @import "tailwindcss-animated";
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
   @theme {
   --shadow-xs-bottom: 
     0 1px 2px 0 rgba(0, 0, 0, 0.05),  
     0 6px 3px -7px rgba(0, 0, 0, 0.2); 
+}
+
+.hover-button {
+  @apply transition-all duration-400 ease-out hover:-translate-y-1 hover:shadow-sm;
+}
+
+.dark-bg-container {
+  @apply dark:bg-[#111111] transition duration-400 ease-out;
 }
