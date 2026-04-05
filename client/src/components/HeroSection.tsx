@@ -14,7 +14,7 @@ export default function HeroSection({ dark, setDark }: ThemeToggleProps) {
             <div className="flex w-full gap-x-5 animate-fade-up">
                 <img src={MyProfile} alt="My Profile" className="w-[160px] h-[160px] object-cover" />
 
-                <div className="flex flex-col w-full pr-5 gap-y-1">
+                <div className="flex flex-col w-full gap-y-1">
 
                     <div className="flex items-center justify-between">
                         <h1 className="dark:text-white text-xl font-semibold">John Patrick Soriaga</h1>
