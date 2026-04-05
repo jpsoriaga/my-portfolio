@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MyProfile from "../assets/Hanni.jpeg"
 import { MapPin, Mail, FileText, Sun, Moon } from 'lucide-react';
 
