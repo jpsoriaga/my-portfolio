@@ -48,6 +48,7 @@ export default function MainPage() {
 
     return (
         <>
+            {/* Mobile View */}
             <div className="grid grid-cols-1 gap-y-3 px-4 my-10 md:hidden">
                 <div className="mb-2">
                     <HeroSection dark={dark} setDark={setDark} />
@@ -60,8 +61,9 @@ export default function MainPage() {
                 <ProjectSection />
                 <CertificateSection />
             </div>
-        
-            <div className="hidden dark:bg-black md:grid md:grid-cols-[1fr_280px] gap-x-3 max-w-[880px] my-10 mx-auto ">
+
+            {/* Desktop View */}
+            <div className="hidden dark:bg-black md:grid md:grid-cols-[1fr_280px] gap-x-3 max-w-[880px] px-5 my-10 mx-auto ">
 
                 <div className="order-1 col-span-2 mb-5">
                     <HeroSection dark={dark} setDark={setDark} />

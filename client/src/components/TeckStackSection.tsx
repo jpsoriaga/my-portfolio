@@ -33,13 +33,13 @@ export default function TechStackSection({ isMoreThan5Lines }: { isMoreThan5Line
                     </div>
 
                     <h2 className="dark:text-white text-sm font-semibold mt-2">Backend</h2>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap md:flex-nowrap gap-2">
                         <TechStackCard techStack="Node.js" />
                         <TechStackCard techStack="Express.js" />
                         <TechStackCard techStack="NestJS" />
                         <TechStackCard techStack="Java" />
                         <TechStackCard techStack="MongoDB" />
-                        <TechStackCard techStack="MySQL" />
+                        {/* <TechStackCard techStack="MySQL" /> */}
                     </div>
 
                     <h2 className="dark:text-white text-sm font-semibold mt-2">Developer Tools</h2>

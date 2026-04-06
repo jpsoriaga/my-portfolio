@@ -18,7 +18,7 @@ export default function HeroSection({ dark, setDark }: ThemeToggleProps) {
                     <div className="flex justify-between">
                         <h1 className="dark:text-white text-base md:text-xl font-semibold">John Patrick Soriaga</h1>
 
-                        <button onClick={() => setDark(!dark)} className="dark:bg-[#4b5563] bg-[#d1d5dc] cursor-pointer relative flex items-center w-15 h-7 p-0.5">
+                        <button onClick={() => setDark(!dark)} className="dark:bg-[#4b5563] bg-[#d1d5dc] cursor-pointer relative flex items-center min-w-15 h-7 p-0.5">
                             <div className={`flex items-center justify-center top-1 left-1 w-7 h-6 bg-white transform transition duration-200 ${dark ? "translate-x-7" : ""}`}>
                                 <Sun size={16} className={`z-10 ${dark ? "hidden" : ""}`} />
                                 <Moon size={16} className={`z-10 ${dark ? "" : "hidden"}`} />
