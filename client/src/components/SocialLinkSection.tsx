@@ -7,10 +7,6 @@ import { useEffect } from "react";
 
 export default function SocialLinkSection({ dark }: { dark: boolean }) {
 
-    useEffect(()=> {
-        document.title = "John Patrick Soriaga - Portfolio";
-    }, []);
-
     return (
         <>
             <div className="dark-bg-container hover:-translate-y-2 shadow-xs-bottom md:max-w-[280px] p-4 animate-fade-up">
