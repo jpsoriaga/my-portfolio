@@ -12,7 +12,7 @@ export default function ProjectSection() {
 
         return (
             <button onClick={() => window.open("https://seek-ict.vercel.app/", "_blank")} className="flex cursor-pointer w-full flex-col items-start">
-                <h3 className=" dark:text-white text-sm font-medium mb-1.5">{title}</h3>
+                <h3 className=" dark:text-white text-start text-sm font-medium mb-1.5">{title}</h3>
                 <p className="dark:text-white text-xs mb-1">{role}</p>
                 <div className="dark:bg-gray-800 bg-[#f3f4f6] px-2 py-1.5 rounded-xs flex items-center justify-center">
                     <span className="dark:text-white text-xs text tracking-wider">{link}</span>
