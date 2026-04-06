@@ -33,9 +33,9 @@ export default function CertificateSection() {
                 </div>
 
                 <div className="flex flex-col gap-y-3">
-                    <CertificationCard title="Certificate 1" location="Google" />
+                    <CertificationCard title="No Certification" location="No Location" />
                     <CertificationCard title="CodeCraft" location="Bulacan State University" />
-                    <CertificationCard title="Certificate 3" location="Amazon" />
+                    <CertificationCard title="No Certification" location="No Location" />
                 </div>
             </div>
         </>

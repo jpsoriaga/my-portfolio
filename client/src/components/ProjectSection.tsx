@@ -35,7 +35,7 @@ export default function ProjectSection() {
 
                 <div className="grid grid-cols-2 gap-2 mt-3">
                     <div className="hover-button p-2.5 flex items-center">
-                        <ProjectCard title="Smart Subway System" role="Fullstack Developer" link="no link" />
+                        <ProjectCard title="Smart Subway System" role="Fullstack Developer" link="demo coming soon" />
                     </div>
 
                     <div className="hover-button p-2.5 flex items-center">
@@ -43,11 +43,11 @@ export default function ProjectSection() {
                     </div>
 
                     <div className="hover-button p-2.5 flex items-center">
-                        <ProjectCard title="Project 1" role="Frontend Developer" link="facebook.com" />
+                        <ProjectCard title="No Project" role="No Role" link="no link" />
                     </div>
 
                     <div className="hover-button p-2.5 flex items-center">
-                        <ProjectCard title="Project 1" role="Frontend Developer" link="facebook.com" />
+                        <ProjectCard title="No Project" role="No Role" link="no link" />
                     </div>
                 </div>
 
