@@ -1,4 +1,5 @@
 import MyProfile from "../assets/Hanni.jpeg"
+import MyProfileKid from "../assets/meme.png"
 import { MapPin, Mail, FileText, Sun, Moon } from 'lucide-react';
 
 type ThemeToggleProps = {
@@ -11,7 +12,7 @@ export default function HeroSection({ dark, setDark }: ThemeToggleProps) {
     return (
         <>
             <div className="flex w-full gap-x-5 animate-fade-up">
-                <img src={MyProfile} alt="My Profile" className="w-[148px] h-[148px] md:w-[160px] md:h-[160px] object-cover" />
+                <img src={MyProfileKid} alt="My Profile" className="w-[148px] h-[148px] md:w-[160px] md:h-[160px] object-cover" />
 
                 <div className="flex flex-col w-full gap-y-1">
 
