@@ -26,3 +26,7 @@ body {
 .dark-bg-container {
   @apply dark:bg-[#111111] transition duration-400 ease-out;
 }
+
+.secondary-text-color {
+  @apply text-[#767676];
+}

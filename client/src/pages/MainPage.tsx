@@ -9,7 +9,7 @@ export default function MainPage() {
 
     return(
         <>
-            <div>
+            <div className="flex min-h-screen w-full items-start">
                 <HeroSection />
             </div>
         </>

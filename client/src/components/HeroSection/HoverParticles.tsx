@@ -11,10 +11,18 @@ type Particle = {
   shape: "dot" | "dash" | "star";
 };
 
+type Rect = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
 const HOVER_IDLE_TIMEOUT_MS = 300;
 const HOVER_RADIUS = 205;
 const HOVER_FADE_OUT_DURATION_MS = 1000;
 const HOVER_FADE_IN_EASING = 0.16;
+const CONTENT_PARTICLE_GAP = 40;
 
 export default function HoverParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -30,6 +38,9 @@ export default function HoverParticles() {
     const canvasEl = canvas;
     const parentEl = parent;
     const context = ctx;
+    const contentEls = Array.from(
+      parentEl.querySelectorAll<HTMLElement>("[data-particle-safe-zone]"),
+    );
 
     let width = 0;
     let height = 0;
@@ -56,19 +67,51 @@ export default function HoverParticles() {
       return min + Math.random() * (max - min);
     }
 
+    function getContentExclusionRects(): Rect[] {
+      const parentRect = parentEl.getBoundingClientRect();
+
+      return contentEls.map((contentEl) => {
+        const contentRect = contentEl.getBoundingClientRect();
+
+        return {
+          left: contentRect.left - parentRect.left - CONTENT_PARTICLE_GAP,
+          right: contentRect.right - parentRect.left + CONTENT_PARTICLE_GAP,
+          top: contentRect.top - parentRect.top - CONTENT_PARTICLE_GAP,
+          bottom: contentRect.bottom - parentRect.top + CONTENT_PARTICLE_GAP,
+        };
+      });
+    }
+
+    function isInsideRect(x: number, y: number, rect: Rect) {
+      return (
+        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+      );
+    }
+
     function buildParticles() {
       particles.length = 0;
 
       const gap = width < 700 ? 28 : 34;
       const margin = 24;
+      const contentExclusionRects = getContentExclusionRects();
 
       for (let y = margin; y < height - margin; y += gap) {
         for (let x = margin; x < width - margin; x += gap) {
           const shapes: Particle["shape"][] = ["dot", "dash", "star"];
+          const particleX = x + random(-4, 4);
+          const particleY = y + random(-4, 4);
+
+          if (
+            contentExclusionRects.some((rect) =>
+              isInsideRect(particleX, particleY, rect),
+            )
+          ) {
+            continue;
+          }
 
           particles.push({
-            x: x + random(-4, 4),
-            y: y + random(-4, 4),
+            x: particleX,
+            y: particleY,
             size: random(1.2, 3.4),
             color: colors[Math.floor(Math.random() * colors.length)],
             angle: random(0, Math.PI * 2),
@@ -208,10 +251,16 @@ export default function HoverParticles() {
     parentEl.addEventListener("pointermove", onPointerMove);
     parentEl.addEventListener("pointerleave", onPointerLeave);
     window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(parentEl);
+    for (const contentEl of contentEls) {
+      resizeObserver.observe(contentEl);
+    }
 
     return () => {
       cancelAnimationFrame(frameId);
       window.clearTimeout(idleTimeoutId);
+      resizeObserver.disconnect();
       parentEl.removeEventListener("pointermove", onPointerMove);
       parentEl.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("resize", resize);
