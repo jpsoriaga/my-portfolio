@@ -1,5 +1,5 @@
+import HeroSection from "@/components/HeroSection/HeroSection";
 import { useEffect } from "react";
-
 
 export default function MainPage() {
 
@@ -10,7 +10,7 @@ export default function MainPage() {
     return(
         <>
             <div>
-                <h1>test</h1>
+                <HeroSection />
             </div>
         </>
     );
