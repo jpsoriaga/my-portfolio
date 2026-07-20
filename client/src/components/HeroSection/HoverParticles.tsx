@@ -23,6 +23,11 @@ const HOVER_RADIUS = 205;
 const HOVER_FADE_OUT_DURATION_MS = 1000;
 const HOVER_FADE_IN_EASING = 0.16;
 const CONTENT_PARTICLE_GAP = 40;
+const IDLE_PARTICLE_MIN_COUNT = 1;
+const IDLE_PARTICLE_MAX_COUNT = 2;
+const IDLE_PARTICLE_HEAT = 1;
+const IDLE_PARTICLE_INTERVAL_MS = 850;
+const IDLE_PARTICLE_FADE_OUT_DURATION_MS = 2000;
 
 export default function HoverParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -47,10 +52,13 @@ export default function HoverParticles() {
     let frameId = 0;
     let idleTimeoutId = 0;
     let lastFrameTime = 0;
+    let nextIdlePulseTime = 0;
 
     const mouse = { x: -9999, y: -9999, active: false };
     const hoverPoint = { x: -9999, y: -9999 };
     const particles: Particle[] = [];
+    const idleParticleIndexes: number[] = [];
+    const idleCoolingParticleIndexes = new Set<number>();
 
     const colors = [
       "#ff671f",
@@ -90,6 +98,8 @@ export default function HoverParticles() {
 
     function buildParticles() {
       particles.length = 0;
+      idleParticleIndexes.length = 0;
+      idleCoolingParticleIndexes.clear();
 
       const gap = width < 700 ? 28 : 34;
       const margin = 24;
@@ -112,13 +122,34 @@ export default function HoverParticles() {
           particles.push({
             x: particleX,
             y: particleY,
-            size: random(1.2, 3.4),
+            size: random(2, 4.7),
             color: colors[Math.floor(Math.random() * colors.length)],
             angle: random(0, Math.PI * 2),
             heat: 0,
             seed: Math.random() * 1000,
             shape: shapes[Math.floor(Math.random() * shapes.length)],
           });
+        }
+      }
+    }
+
+    function pickIdleParticles() {
+      for (const index of idleParticleIndexes) {
+        idleCoolingParticleIndexes.add(index);
+      }
+
+      idleParticleIndexes.length = 0;
+      if (particles.length === 0) return;
+
+      const maxCount = Math.min(IDLE_PARTICLE_MAX_COUNT, particles.length);
+      const count = Math.floor(random(IDLE_PARTICLE_MIN_COUNT, maxCount + 1));
+
+      while (idleParticleIndexes.length < count) {
+        const index = Math.floor(random(0, particles.length));
+
+        if (!idleParticleIndexes.includes(index)) {
+          idleParticleIndexes.push(index);
+          idleCoolingParticleIndexes.delete(index);
         }
       }
     }
@@ -163,23 +194,50 @@ export default function HoverParticles() {
       context.clearRect(0, 0, width, height);
       const fadeOutEasing =
         1 - Math.pow(0.05, deltaTime / HOVER_FADE_OUT_DURATION_MS);
+      const idleFadeOutEasing =
+        1 - Math.pow(0.05, deltaTime / IDLE_PARTICLE_FADE_OUT_DURATION_MS);
 
-      for (const particle of particles) {
+      if (mouse.active) {
+        idleParticleIndexes.length = 0;
+        idleCoolingParticleIndexes.clear();
+        nextIdlePulseTime = time + IDLE_PARTICLE_INTERVAL_MS;
+      } else if (time >= nextIdlePulseTime) {
+        pickIdleParticles();
+        nextIdlePulseTime = time + IDLE_PARTICLE_INTERVAL_MS;
+      }
+
+      for (let index = 0; index < particles.length; index++) {
+        const particle = particles[index];
         const hoverDistance = Math.hypot(
           hoverPoint.x - particle.x,
           hoverPoint.y - particle.y,
         );
-        const influence = mouse.active
+        const hoverInfluence = mouse.active
           ? Math.max(0, 1 - hoverDistance / HOVER_RADIUS) ** 2
           : 0;
+        const idleInfluence =
+          !mouse.active && idleParticleIndexes.includes(index)
+            ? IDLE_PARTICLE_HEAT
+            : 0;
+        const influence = Math.max(hoverInfluence, idleInfluence);
         const isInsideHoverZone = hoverDistance <= HOVER_RADIUS;
         const shouldFadeSlowly = !mouse.active && isInsideHoverZone;
+        const isIdleCooling =
+          !mouse.active && idleCoolingParticleIndexes.has(index);
         const heatEasing =
-          influence > particle.heat || !shouldFadeSlowly
+          influence > particle.heat
             ? HOVER_FADE_IN_EASING
-            : fadeOutEasing;
+            : isIdleCooling
+              ? idleFadeOutEasing
+              : shouldFadeSlowly
+                ? fadeOutEasing
+                : HOVER_FADE_IN_EASING;
 
         particle.heat += (influence - particle.heat) * heatEasing;
+
+        if (isIdleCooling && particle.heat < 0.01) {
+          idleCoolingParticleIndexes.delete(index);
+        }
 
         const size = particle.size * (1 + particle.heat * 5);
         const shimmerX =
@@ -194,7 +252,7 @@ export default function HoverParticles() {
         context.fillStyle =
           particle.heat > 0.08
             ? particle.color
-            : "rgba(130, 126, 118, 0.55)";
+            : "rgba(130, 126, 118, 0.90)";
         context.strokeStyle = context.fillStyle;
         context.lineWidth = Math.max(1.4, size * 0.22);
         context.lineCap = "round";
