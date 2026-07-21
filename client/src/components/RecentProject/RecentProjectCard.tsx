@@ -11,16 +11,16 @@ type RecentProjectCardProps = {
 export default function RecentProjectCard({ logo, title, year, image, category, tags }: RecentProjectCardProps) {
     return (
         <>
-            <div className="flex flex-col gap-y-3">
-                <div className="flex items-center justify-between">
-                    <div className="flex gap-x-2 items-center">
-                        <img src={logo} alt="System Logo" className="rounded-sm w-5 h-auto object-cover" />
-                        <h1 className="text-lg">{title}</h1>
+            <div className="flex w-full min-w-0 flex-col gap-y-3">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex min-w-0 items-center gap-x-2">
+                        <img src={logo} alt="System Logo" className="h-6 w-6 shrink-0 rounded-sm" />
+                        <h1 className="truncate text-base sm:text-lg">{title}</h1>
                     </div>
-                    <span className="text-sm font-light secondary-text-color">{year}</span>
+                    <span className="shrink-0 text-sm font-light secondary-text-color">{year}</span>
                 </div>
 
-                <img src={image} alt="System Advertisement" className="rounded-md w-[500px] h-auto" />
+                <img src={image} alt="System Advertisement" className="h-auto w-full rounded-md" />
 
                 <h1>{category}</h1>
                 <div className="flex flex-wrap gap-2">
