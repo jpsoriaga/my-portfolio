@@ -1,3 +1,4 @@
+import About from "@/components/About/About";
 import Footer from "@/components/Footer/Footer";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import Navigation, { type NavigationItem } from "@/components/Navigation/Navigation";
@@ -22,7 +23,7 @@ export default function MainPage() {
                     />
                 </div>
                 {activeNavigation === "Project" && <RecentProject />}
-
+                {activeNavigation === "About" && <About />}
                 <Footer />
             </div>
         </>
