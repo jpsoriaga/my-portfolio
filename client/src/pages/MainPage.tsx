@@ -5,7 +5,7 @@ import RecentProject from "@/components/RecentProject/RecentProject";
 import { useEffect, useState } from "react";
 
 export default function MainPage() {
-    const [activeNavigation, setActiveNavigation] = useState<NavigationItem>("Work");
+    const [activeNavigation, setActiveNavigation] = useState<NavigationItem>("Project");
 
     useEffect(() => {
         document.title = "John Patrick Soriaga | Portfolio"
@@ -21,7 +21,7 @@ export default function MainPage() {
                         onNavigationChange={setActiveNavigation}
                     />
                 </div>
-                {activeNavigation === "Work" && <RecentProject />}
+                {activeNavigation === "Project" && <RecentProject />}
 
                 <Footer />
             </div>

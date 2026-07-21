@@ -140,7 +140,7 @@ export default function HeroSection() {
 
                         <div data-particle-safe-zone>
                             <div ref={aboutRef}>
-                                <span className="text-xs secondary-text-color">ABOUT</span>
+                                <span className="text-xs font-light secondary-text-color">ABOUT</span>
                                 <p className="text-justify tracking-wider pb-5">I’m a BSIT student focused on web development, building projects to strengthen my understanding
                                     of both frontend and backend systems. I enjoy creating responsive and user-friendly interfaces, and I’m currently learning the MERN stack to develop full-stack applications.</p>
 
@@ -149,7 +149,7 @@ export default function HeroSection() {
                             </div>
 
                             <div ref={copyRef}>
-                                <span className="hidden md:inline-flex items-center gap-2 text-sm tracking-wider text-[#767676]">
+                                <span className="font-light hidden md:inline-flex items-center gap-2 text-sm tracking-wider text-[#767676]">
                                     Press
                                     <button
                                         type="button"
