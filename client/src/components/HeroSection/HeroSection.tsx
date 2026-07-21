@@ -135,7 +135,7 @@ export default function HeroSection() {
                     <div className="flex max-w-[500px] flex-col gap-y-10 lg:max-w-[540px]">
                         <div className="flex w-fit flex-col gap-y-3">
                             <img ref={imageRef} src={MyProfile} alt="My Profile" className="w-20 h-20 object-cover rounded-md" data-particle-safe-zone />
-                            <h1 ref={headingRef} className="overflow-hidden text-2xl font-medium tracking-wide" data-particle-safe-zone>John Patrick Soriaga is a Web Developer.</h1>
+                                    <h1 ref={headingRef} className="overflow-hidden text-2xl font-medium tracking-wide" data-particle-safe-zone>John Patrick Soriaga is a Web Developer.</h1>
                         </div>
 
                         <div data-particle-safe-zone>

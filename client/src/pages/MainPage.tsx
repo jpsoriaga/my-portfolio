@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import Navigation, { type NavigationItem } from "@/components/Navigation/Navigation";
 import RecentProject from "@/components/RecentProject/RecentProject";
@@ -21,6 +22,8 @@ export default function MainPage() {
                     />
                 </div>
                 {activeNavigation === "Work" && <RecentProject />}
+
+                <Footer />
             </div>
         </>
     );
