@@ -53,13 +53,13 @@ export default function RecentProject() {
                             category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} />
                     </div>
                     <div ref={(element) => {
-                        projectCardRefs.current[1] = element;
+                        projectCardRefs.current[2] = element;
                     }}>
                         <RecentProjectCard logo={IlabCICTLogo} title="IlabCICT" year={2026} image={IlabCICT}
                             category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} />
                     </div>
                     <div ref={(element) => {
-                        projectCardRefs.current[0] = element;
+                        projectCardRefs.current[3] = element;
                     }}>
                         <RecentProjectCard logo={SubwayLogo} title="Smart Subway" year={2026} image={SmartSubway}
                             category="Food & Beverage" tags={["POS System", "Dashboard", "Order Management"]} />
