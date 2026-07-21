@@ -31,7 +31,7 @@ export default function Navigation({ activeItem, onNavigationChange }: Navigatio
             <div className="relative flex w-full rounded-md bg-[#fafafa] p-0.5">
                 <span
                     aria-hidden="true"
-                    className="absolute top-0.5 h-[calc(100%-0.25rem)] rounded-md bg-[#e5e5e5] transition-[left,width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    className="absolute top-0.5 h-[calc(100%-0.25rem)] rounded-md bg-[#e5e5e5] transition-[left,width] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]"
                     style={{
                         left: `calc(0.125rem + ((100% - 0.25rem) * ${activeLeft / 100}))`,
                         width: `calc((100% - 0.25rem) * ${navigationWidths[activeIndex] / 100})`,
@@ -45,7 +45,7 @@ export default function Navigation({ activeItem, onNavigationChange }: Navigatio
                         aria-current={selectedItem === item ? "page" : undefined}
                         onClick={() => handleNavigationChange(item)}
                         className={` relative z-10 flex h-8.5 items-center justify-center rounded-md px-1.5 text-sm
-                             tracking-wide transition-colors duration-300 ease-out ${
+                             tracking-wide transition-colors duration-400 ease-out ${
                             selectedItem === item ? "text-black" : "text-[#9d9996] hover:text-[#66615d]"
                         }`}
                         style={{ flexBasis: `${navigationWidths[index]}%` }}

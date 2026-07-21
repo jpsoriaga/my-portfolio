@@ -1,13 +1,86 @@
 import HoverParticles from "./HoverParticles";
 import { Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import MyProfile from "@/assets/Hanni.jpeg"
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import MyProfile from "@/assets/Hanni.jpeg";
+
+gsap.registerPlugin(SplitText);
 
 const EMAIL = "patricksoriaga14@gmail.com";
 
 export default function HeroSection() {
     const [showToast, setShowToast] = useState(false);
     const toastTimer = useRef<number | null>(null);
+    const imageRef = useRef<HTMLImageElement | null>(null);
+    const headingRef = useRef<HTMLHeadingElement | null>(null);
+    const aboutRef = useRef<HTMLDivElement | null>(null);
+    const copyRef = useRef<HTMLDivElement | null>(null);
+
+    useLayoutEffect(() => {
+        let split: SplitText | null = null;
+
+        const ctx = gsap.context(() => {
+            if (headingRef.current) {
+                split = SplitText.create(headingRef.current, {
+                    type: "words",
+                });
+
+                gsap.fromTo(
+                    split.words,
+                    { yPercent: 200 },
+                    {
+                        yPercent: 0,
+                        duration: 1,
+                        stagger: 0.04,
+                        delay: 0.2,
+                        ease: "power3.out",
+                    }
+                );
+            }
+
+            if (imageRef.current) {
+                gsap.from(imageRef.current, {
+                    y: 20,
+                    opacity: 0,
+                    filter: "blur(5px)",
+                    duration: 0.6,
+                    delay: 1.1,
+                    ease: "power3.out",
+                    clearProps: "filter,transform,opacity",
+                });
+            }
+
+            if (aboutRef.current) {
+                gsap.from(aboutRef.current, {
+                    y: 20,
+                    opacity: 0,
+                    filter: "blur(5px)",
+                    duration: 0.6,
+                    delay: 1.25,
+                    ease: "power3.out",
+                    clearProps: "filter,transform,opacity",
+                });
+            }
+
+            if (copyRef.current) {
+                gsap.from(copyRef.current, {
+                    y: 20,
+                    opacity: 0,
+                    filter: "blur(5px)",
+                    duration: 0.6,
+                    delay: 1.4,
+                    ease: "power3.out",
+                    clearProps: "filter,transform,opacity",
+                });
+            }
+        });
+
+        return () => {
+            ctx.revert();
+            split?.revert();
+        };
+    }, []);
 
     const copyEmail = async () => {
         if (navigator.clipboard) {
@@ -61,19 +134,21 @@ export default function HeroSection() {
 
                     <div className="flex max-w-[500px] flex-col gap-y-10 lg:max-w-[540px]">
                         <div className="flex w-fit flex-col gap-y-3">
-                            <img src={MyProfile} alt="My Profile" className="w-20 h-20 object-cover rounded-md" data-particle-safe-zone />
-                            <h1 className="text-2xl font-medium tracking-wide" data-particle-safe-zone>John Patrick Soriaga is a Web Developer.</h1>
+                            <img ref={imageRef} src={MyProfile} alt="My Profile" className="w-20 h-20 object-cover rounded-md" data-particle-safe-zone />
+                            <h1 ref={headingRef} className="overflow-hidden text-2xl font-medium tracking-wide" data-particle-safe-zone>John Patrick Soriaga is a Web Developer.</h1>
                         </div>
 
                         <div data-particle-safe-zone>
-                            <span className="text-xs secondary-text-color">ABOUT</span>
-                            <p className="text-justify tracking-wider pb-5">I’m a BSIT student focused on web development, building projects to strengthen my understanding
-                                of both frontend and backend systems. I enjoy creating responsive and user-friendly interfaces, and I’m currently learning the MERN stack to develop full-stack applications.</p>
+                            <div ref={aboutRef}>
+                                <span className="text-xs secondary-text-color">ABOUT</span>
+                                <p className="text-justify tracking-wider pb-5">I’m a BSIT student focused on web development, building projects to strengthen my understanding
+                                    of both frontend and backend systems. I enjoy creating responsive and user-friendly interfaces, and I’m currently learning the MERN stack to develop full-stack applications.</p>
 
-                            <p className="text-justify tracking-wider pb-5">I’m always looking for opportunities to improve my skills and gain real-world experience. My goal is to become
-                                 a reliable full-stack developer who builds practical and meaningful web applications.</p>
+                                <p className="text-justify tracking-wider pb-5">I’m always looking for opportunities to improve my skills and gain real-world experience. My goal is to become
+                                     a reliable full-stack developer who builds practical and meaningful web applications.</p>
+                            </div>
 
-                            <div>
+                            <div ref={copyRef}>
                                 <span className="hidden md:inline-flex items-center gap-2 text-sm tracking-wider text-[#767676]">
                                     Press
                                     <button
