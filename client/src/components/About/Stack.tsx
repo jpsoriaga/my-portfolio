@@ -47,7 +47,7 @@ export default function Stack() {
 
                 <div className="flex flex-col gap-y-1">
                      <span className="text-xs font-light secondary-text-color">BACKEND</span>
-                    <div className="flex flex-wrap gap-x-4 gap-y-8 overflow-visible py-1 pb-10">
+                    <div className="flex flex-wrap gap-x-4 gap-y-8 overflow-visible py-1 pb-3">
                         <StackIcon name="Node.js" href="https://nodejs.org/">
                             <NodejsIcon size={40} className="rounded-md" />
                         </StackIcon>
@@ -80,7 +80,7 @@ export default function Stack() {
 
                 <div className="flex flex-col gap-y-1">
                      <span className="text-xs font-light secondary-text-color">Developer Tools</span>
-                    <div className="flex flex-wrap gap-x-4 gap-y-8 overflow-visible py-1 pb-10">
+                    <div className="flex flex-wrap gap-x-4 gap-y-8 overflow-visible py-1">
                         <StackIcon name="Git" href="https://git-scm.com/">
                             <GitIcon size={40} className="rounded-md" />
                         </StackIcon>
