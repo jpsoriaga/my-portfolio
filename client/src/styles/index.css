@@ -28,5 +28,5 @@ body {
 }
 
 .secondary-text-color {
-  @apply text-[#767676];
+  @apply text-[#9d9996];
 }
