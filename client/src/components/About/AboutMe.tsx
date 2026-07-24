@@ -5,7 +5,7 @@ export default function AboutMe() {
         <>
             <div className="flex flex-col gap-y-2.5">
                 <span className="text-xs font-light secondary-text-color">ABOUT ME</span>
-            <div className="flex flex-col gap-y-5 text-justify tracking-wider       ">
+            <div className="flex flex-col gap-y-5 text-justify tracking-wider">
                 <p>I’m John Patrick, a BSIT student and full-stack web developer focused on building practical, user-friendly web applications.
                     I started programming in 2021 with C, and what began with struggling through basic concepts eventually grew into a genuine interest in creating complete digital systems.</p>
                 <p>I currently work mainly with the MERN stack, building both frontend interfaces and backend functionality. Alongside development,

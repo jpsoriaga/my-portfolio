@@ -30,3 +30,26 @@ body {
 .secondary-text-color {
   @apply text-[#9d9996];
 }
+
+.personal-photo-card {
+  z-index: 1;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.12),
+    0 6px 12px rgba(0, 0, 0, 0.08);
+  transform: rotate(var(--rot, 0deg)) translateY(var(--ty, 0px));
+  transform-origin: center;
+  will-change: transform;
+  transition:
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 350ms ease,
+    filter 350ms ease;
+}
+
+.personal-photo-card:hover {
+  z-index: 30;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.14),
+    0 18px 34px rgba(0, 0, 0, 0.16);
+  filter: brightness(1.03) saturate(1.05);
+  transform: rotate(0deg) translateY(-8px) scale(1.05);
+}

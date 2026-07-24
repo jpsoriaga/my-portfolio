@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import MyProfile from "@/assets/Hanni.jpeg";
+import MyProfile from "@/assets/meme.png";
 
 gsap.registerPlugin(SplitText);
 

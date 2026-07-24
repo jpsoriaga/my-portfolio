@@ -1,3 +1,4 @@
+import PhotoStack from "../Personal/PhotoStack";
 
 
 export default function Education() {
@@ -23,6 +24,7 @@ export default function Education() {
                     </div>
                     
                 </div>
+                
             </div>
         </>
     );

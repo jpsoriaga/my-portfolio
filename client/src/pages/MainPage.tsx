@@ -2,6 +2,7 @@ import About from "@/components/About/About";
 import Footer from "@/components/Footer/Footer";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import Navigation, { type NavigationItem } from "@/components/Navigation/Navigation";
+import Personal from "@/components/Personal/Personal";
 import RecentProject from "@/components/RecentProject/RecentProject";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ export default function MainPage() {
                 </div>
                 {activeNavigation === "Project" && <RecentProject />}
                 {activeNavigation === "About" && <About />}
+                {activeNavigation === "Fun" && <Personal />}
                 <Footer />
             </div>
         </>
