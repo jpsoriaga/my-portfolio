@@ -1,6 +1,3 @@
-import PhotoStack from "../Personal/PhotoStack";
-
-
 export default function Education() {
     return(
         <>

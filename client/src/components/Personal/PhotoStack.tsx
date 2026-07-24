@@ -1,40 +1,49 @@
 import type { CSSProperties } from "react";
 
+import photoOne from "../../assets/personal/1.jpeg";
+import photoTwo from "../../assets/personal/2.jpeg";
+import photoThree from "../../assets/personal/3.jpeg";
+import photoFour from "../../assets/personal/4.jpeg";
+
 const photos = [
     {
-        className: "left-[-4px] top-1 bg-[radial-gradient(circle_at_70%_20%,#fef3c7_0_18%,transparent_19%),linear-gradient(145deg,#60a5fa,#22c55e_58%,#14532d)]",
-        label: "Placeholder landscape photo",
+        className: "sm:left-[-2px] sm:top-1",
+        label: "Personal photo 1",
         rotation: "-2deg",
+        src: photoOne,
         y: "0px",
     },
     {
-        className: "left-[30%] top-[-8px] bg-[linear-gradient(180deg,#bfdbfe_0_42%,#64748b_43%_48%,#1e293b_49%_100%)]",
-        label: "Placeholder mountain photo",
+        className: "sm:left-[25%] sm:top-[-8px]",
+        label: "Personal photo 2",
         rotation: "2deg",
+        src: photoTwo,
         y: "-2px",
     },
     {
-        className: "left-[56%] bottom-[-8px] bg-[linear-gradient(180deg,#38bdf8_0_50%,#facc15_51%_58%,#0f766e_59%_100%)]",
-        label: "Placeholder beach photo",
+        className: "sm:bottom-[-8px] sm:left-[47%]",
+        label: "Personal photo 3",
         rotation: "-2deg",
+        src: photoFour,
         y: "2px",
     },
     {
-        className: "right-[-28px] top-[-4px] bg-[radial-gradient(circle_at_64%_28%,#f8fafc_0_14%,transparent_15%),linear-gradient(135deg,#f97316,#7c2d12_48%,#111827)]",
-        label: "Placeholder portrait photo",
+        className: "sm:right-[-28px] sm:top-[-4px]",
+        label: "Personal photo 4",
         rotation: "2deg",
+        src: photoThree,
         y: "-1px",
     },
 ];
 
 export default function PhotoStack() {
     return (
-        <div className="mt-8 w-full overflow-visible">
-            <div className="relative h-[220px] w-full max-w-[608px] overflow-visible sm:h-[248px]">
+        <div className="mt-8 w-full overflow-visible px-4 md:px-6 lg:px-0">
+            <div className="mx-auto grid w-full max-w-[calc(100%-2rem)] grid-cols-2 gap-4 overflow-visible sm:relative sm:block sm:h-[248px] sm:max-w-[608px]">
                 {photos.map((photo) => (
                     <div
                         aria-label={photo.label}
-                        className={`personal-photo-card absolute h-full w-[34%] min-w-[128px] max-w-[184px] cursor-zoom-in overflow-hidden rounded-[10px] border-[5px] border-white ${photo.className}`}
+                        className={`personal-photo-card relative aspect-[4/5] w-full overflow-hidden rounded-[10px] border-[5px] border-white sm:absolute sm:h-full sm:w-[34%] sm:min-w-[128px] sm:max-w-[184px] ${photo.className}`}
                         key={photo.label}
                         role="img"
                         style={{
@@ -42,6 +51,11 @@ export default function PhotoStack() {
                             "--ty": photo.y,
                         } as CSSProperties}
                     >
+                        <img
+                            alt={photo.label}
+                            className="h-full w-full object-cover"
+                            src={photo.src}
+                        />
                         <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.35),transparent_42%)]" />
                         <div className="absolute inset-x-3 bottom-3 h-10 rounded-full bg-black/10 blur-xl" />
                     </div>
