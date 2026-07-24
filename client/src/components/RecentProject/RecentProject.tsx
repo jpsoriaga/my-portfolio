@@ -44,25 +44,13 @@ export default function RecentProject() {
                         projectCardRefs.current[0] = element;
                     }}>
                         <RecentProjectCard logo={SubwayLogo} title="Smart Subway" year={2026} image={SmartSubway}
-                            category="Food & Beverage" tags={["POS System", "Dashboard", "Order Management"]} />
+                            category="Food & Beverage" tags={["POS System", "Dashboard", "Order Management"]} href="https://smart-subway-system.vercel.app/" />
                     </div>
                     <div ref={(element) => {
                         projectCardRefs.current[1] = element;
                     }}>
                         <RecentProjectCard logo={IlabCICTLogo} title="IlabCICT" year={2026} image={IlabCICT}
-                            category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} />
-                    </div>
-                    <div ref={(element) => {
-                        projectCardRefs.current[2] = element;
-                    }}>
-                        <RecentProjectCard logo={IlabCICTLogo} title="IlabCICT" year={2026} image={IlabCICT}
-                            category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} />
-                    </div>
-                    <div ref={(element) => {
-                        projectCardRefs.current[3] = element;
-                    }}>
-                        <RecentProjectCard logo={SubwayLogo} title="Smart Subway" year={2026} image={SmartSubway}
-                            category="Food & Beverage" tags={["POS System", "Dashboard", "Order Management"]} />
+                            category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} href="https://i-lab-cict-web.vercel.app/" />
                     </div>
                 </div>
             </div>
