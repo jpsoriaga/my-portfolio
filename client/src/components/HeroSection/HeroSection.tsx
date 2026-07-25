@@ -1,9 +1,9 @@
 import HoverParticles from "./HoverParticles";
 import { Check } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import MyProfile from "@/assets/meme.png";
+import MyProfile from "@/assets/meme.webp";
 
 gsap.registerPlugin(SplitText);
 
@@ -82,7 +82,7 @@ export default function HeroSection() {
         };
     }, []);
 
-    const copyEmail = async () => {
+    const copyEmail = useCallback(async () => {
         if (navigator.clipboard) {
             await navigator.clipboard.writeText(EMAIL);
         } else {
@@ -105,7 +105,7 @@ export default function HeroSection() {
         toastTimer.current = window.setTimeout(() => {
             setShowToast(false);
         }, 1800);
-    };
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -123,7 +123,7 @@ export default function HeroSection() {
                 window.clearTimeout(toastTimer.current);
             }
         };
-    }, []);
+    }, [copyEmail]);
 
     return (
         <>
@@ -134,7 +134,7 @@ export default function HeroSection() {
 
                     <div className="flex max-w-[500px] flex-col gap-y-10 lg:max-w-[540px]">
                         <div className="flex w-fit flex-col gap-y-3">
-                            <img ref={imageRef} src={MyProfile} alt="My Profile" className="w-20 h-20 object-cover rounded-md" data-particle-safe-zone />
+                            <img ref={imageRef} src={MyProfile} alt="My Profile" width={80} height={80} className="w-20 h-20 object-cover rounded-md" data-particle-safe-zone />
                                     <h1 ref={headingRef} className="overflow-hidden text-2xl font-medium tracking-wide" data-particle-safe-zone>John Patrick Soriaga is a Web Developer.</h1>
                         </div>
 

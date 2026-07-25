@@ -28,6 +28,7 @@ const IDLE_PARTICLE_MAX_COUNT = 2;
 const IDLE_PARTICLE_HEAT = 1;
 const IDLE_PARTICLE_INTERVAL_MS = 850;
 const IDLE_PARTICLE_FADE_OUT_DURATION_MS = 2000;
+const MINIMAL_MOTION_PARTICLE_INTERVAL_MS = 1400;
 
 export default function HoverParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -51,14 +52,20 @@ export default function HoverParticles() {
     let height = 0;
     let frameId = 0;
     let idleTimeoutId = 0;
+    let pointerFrameId = 0;
     let lastFrameTime = 0;
     let nextIdlePulseTime = 0;
+    let isVisible = true;
+    let parentBounds = { left: 0, top: 0 };
 
     const mouse = { x: -9999, y: -9999, active: false };
     const hoverPoint = { x: -9999, y: -9999 };
+    const pendingPointer = { x: -9999, y: -9999 };
     const particles: Particle[] = [];
     const idleParticleIndexes: number[] = [];
+    const idleParticleIndexSet = new Set<number>();
     const idleCoolingParticleIndexes = new Set<number>();
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const colors = [
       "#ff671f",
@@ -99,9 +106,11 @@ export default function HoverParticles() {
     function buildParticles() {
       particles.length = 0;
       idleParticleIndexes.length = 0;
+      idleParticleIndexSet.clear();
       idleCoolingParticleIndexes.clear();
 
-      const gap = width < 700 ? 28 : 34;
+      const hasReducedMotion = reducedMotionQuery.matches;
+      const gap = hasReducedMotion ? 58 : width < 700 ? 32 : 38;
       const margin = 24;
       const contentExclusionRects = getContentExclusionRects();
 
@@ -139,16 +148,21 @@ export default function HoverParticles() {
       }
 
       idleParticleIndexes.length = 0;
+      idleParticleIndexSet.clear();
       if (particles.length === 0) return;
 
-      const maxCount = Math.min(IDLE_PARTICLE_MAX_COUNT, particles.length);
+      const maxCount = Math.min(
+        reducedMotionQuery.matches ? IDLE_PARTICLE_MIN_COUNT : IDLE_PARTICLE_MAX_COUNT,
+        particles.length,
+      );
       const count = Math.floor(random(IDLE_PARTICLE_MIN_COUNT, maxCount + 1));
 
       while (idleParticleIndexes.length < count) {
         const index = Math.floor(random(0, particles.length));
 
-        if (!idleParticleIndexes.includes(index)) {
+        if (!idleParticleIndexSet.has(index)) {
           idleParticleIndexes.push(index);
+          idleParticleIndexSet.add(index);
           idleCoolingParticleIndexes.delete(index);
         }
       }
@@ -156,10 +170,13 @@ export default function HoverParticles() {
 
     function resize() {
       const rect = parentEl.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
       width = rect.width;
       height = rect.height;
+      parentBounds = { left: rect.left, top: rect.top };
+
+      const dpr = reducedMotionQuery.matches
+        ? 1
+        : Math.min(window.devicePixelRatio || 1, width < 700 ? 1.5 : 2);
 
       canvasEl.width = Math.floor(width * dpr);
       canvasEl.height = Math.floor(height * dpr);
@@ -168,6 +185,20 @@ export default function HoverParticles() {
 
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildParticles();
+    }
+
+    function startAnimation() {
+      if (frameId) return;
+
+      lastFrameTime = 0;
+      frameId = requestAnimationFrame(animate);
+    }
+
+    function stopAnimation() {
+      if (!frameId) return;
+
+      cancelAnimationFrame(frameId);
+      frameId = 0;
     }
 
     function drawStar(size: number) {
@@ -190,6 +221,7 @@ export default function HoverParticles() {
     function animate(time: number) {
       const deltaTime = lastFrameTime ? time - lastFrameTime : 16.67;
       lastFrameTime = time;
+      frameId = 0;
 
       context.clearRect(0, 0, width, height);
       const fadeOutEasing =
@@ -199,28 +231,35 @@ export default function HoverParticles() {
 
       if (mouse.active) {
         idleParticleIndexes.length = 0;
+        idleParticleIndexSet.clear();
         idleCoolingParticleIndexes.clear();
         nextIdlePulseTime = time + IDLE_PARTICLE_INTERVAL_MS;
       } else if (time >= nextIdlePulseTime) {
         pickIdleParticles();
-        nextIdlePulseTime = time + IDLE_PARTICLE_INTERVAL_MS;
+        nextIdlePulseTime =
+          time +
+          (reducedMotionQuery.matches
+            ? MINIMAL_MOTION_PARTICLE_INTERVAL_MS
+            : IDLE_PARTICLE_INTERVAL_MS);
       }
 
       for (let index = 0; index < particles.length; index++) {
         const particle = particles[index];
-        const hoverDistance = Math.hypot(
-          hoverPoint.x - particle.x,
-          hoverPoint.y - particle.y,
-        );
+        const distanceX = hoverPoint.x - particle.x;
+        const distanceY = hoverPoint.y - particle.y;
+        const hoverDistanceSquared = distanceX * distanceX + distanceY * distanceY;
+        const isInsideHoverZone = hoverDistanceSquared <= HOVER_RADIUS * HOVER_RADIUS;
+        const hoverDistance = isInsideHoverZone
+          ? Math.sqrt(hoverDistanceSquared)
+          : HOVER_RADIUS;
         const hoverInfluence = mouse.active
           ? Math.max(0, 1 - hoverDistance / HOVER_RADIUS) ** 2
           : 0;
         const idleInfluence =
-          !mouse.active && idleParticleIndexes.includes(index)
+          !mouse.active && idleParticleIndexSet.has(index)
             ? IDLE_PARTICLE_HEAT
             : 0;
         const influence = Math.max(hoverInfluence, idleInfluence);
-        const isInsideHoverZone = hoverDistance <= HOVER_RADIUS;
         const shouldFadeSlowly = !mouse.active && isInsideHoverZone;
         const isIdleCooling =
           !mouse.active && idleCoolingParticleIndexes.has(index);
@@ -277,7 +316,9 @@ export default function HoverParticles() {
         context.restore();
       }
 
-      frameId = requestAnimationFrame(animate);
+      if (isVisible && !document.hidden) {
+        frameId = requestAnimationFrame(animate);
+      }
     }
 
     function stopHoverEffect() {
@@ -287,10 +328,10 @@ export default function HoverParticles() {
       window.clearTimeout(idleTimeoutId);
     }
 
-    function onPointerMove(event: PointerEvent) {
-      const rect = parentEl.getBoundingClientRect();
-      mouse.x = event.clientX - rect.left;
-      mouse.y = event.clientY - rect.top;
+    function applyPointerMove() {
+      pointerFrameId = 0;
+      mouse.x = pendingPointer.x;
+      mouse.y = pendingPointer.y;
       hoverPoint.x = mouse.x;
       hoverPoint.y = mouse.y;
       mouse.active = true;
@@ -299,14 +340,23 @@ export default function HoverParticles() {
       idleTimeoutId = window.setTimeout(stopHoverEffect, HOVER_IDLE_TIMEOUT_MS);
     }
 
+    function onPointerMove(event: PointerEvent) {
+      pendingPointer.x = event.clientX - parentBounds.left;
+      pendingPointer.y = event.clientY - parentBounds.top;
+
+      if (!pointerFrameId) {
+        pointerFrameId = requestAnimationFrame(applyPointerMove);
+      }
+    }
+
     function onPointerLeave() {
       stopHoverEffect();
     }
 
     resize();
-    frameId = requestAnimationFrame(animate);
+    startAnimation();
 
-    parentEl.addEventListener("pointermove", onPointerMove);
+    parentEl.addEventListener("pointermove", onPointerMove, { passive: true });
     parentEl.addEventListener("pointerleave", onPointerLeave);
     window.addEventListener("resize", resize);
     const resizeObserver = new ResizeObserver(resize);
@@ -314,14 +364,41 @@ export default function HoverParticles() {
     for (const contentEl of contentEls) {
       resizeObserver.observe(contentEl);
     }
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+
+      if (isVisible && !document.hidden) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    });
+    intersectionObserver.observe(parentEl);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else if (isVisible) {
+        startAnimation();
+      }
+    };
+    const handleReducedMotionChange = () => resize();
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stopAnimation();
+      if (pointerFrameId) {
+        cancelAnimationFrame(pointerFrameId);
+      }
       window.clearTimeout(idleTimeoutId);
+      intersectionObserver.disconnect();
       resizeObserver.disconnect();
       parentEl.removeEventListener("pointermove", onPointerMove);
       parentEl.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
     };
   }, []);
 

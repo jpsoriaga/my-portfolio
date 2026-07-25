@@ -42,6 +42,8 @@ export default function Navigation({ activeItem, onNavigationChange }: Navigatio
     }, []);
 
     const handleNavigationChange = (item: NavigationItem) => {
+        if (item === selectedItem) return;
+
         setInternalActiveItem(item);
         onNavigationChange?.(item);
     };

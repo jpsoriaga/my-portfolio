@@ -2,8 +2,8 @@ import RecentProjectCard from "./RecentProjectCard";
 import SubwayLogo from "@/assets/subway-logo.jpg"
 import IlabCICTLogo from "@/assets/ilabcict-logo.png"
 
-import SmartSubway from "@/assets/smart-subway.png"
-import IlabCICT from "@/assets/ilabcict.png"
+import SmartSubway from "@/assets/smart-subway-preview.jpg"
+import IlabCICT from "@/assets/ilabcict-preview.jpg"
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";

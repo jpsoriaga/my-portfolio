@@ -54,6 +54,8 @@ export default function PhotoStack() {
                         <img
                             alt={photo.label}
                             className="h-full w-full object-cover"
+                            loading="lazy"
+                            decoding="async"
                             src={photo.src}
                         />
                         <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.35),transparent_42%)]" />
