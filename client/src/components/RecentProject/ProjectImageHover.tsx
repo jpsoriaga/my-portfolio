@@ -67,7 +67,7 @@ export default function ProjectImageHover({ image, alt }: ProjectImageHoverProps
 
     return (
         <div
-            className={`relative overflow-hidden rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_6px_12px_rgba(0,0,0,0.06)] ${
+            className={`relative aspect-[1200/783] overflow-hidden rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_6px_12px_rgba(0,0,0,0.06)] ${
                 isHoverable ? "cursor-none" : ""
             }`}
             onPointerEnter={handlePointerEnter}
@@ -79,7 +79,7 @@ export default function ProjectImageHover({ image, alt }: ProjectImageHoverProps
                 alt={alt}
                 loading="lazy"
                 decoding="async"
-                className={`h-auto w-full transition-transform duration-[450ms] ease-[cubic-bezier(.16,1,.3,1)] ${
+                className={`h-full w-full object-cover transition-transform duration-[450ms] ease-[cubic-bezier(.16,1,.3,1)] ${
                     isHoverable ? "group-hover:scale-[1.0125]" : ""
                 }`}
             />

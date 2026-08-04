@@ -16,6 +16,7 @@ export default function RecentProject() {
     useLayoutEffect(() => {
         const projectCards = projectCardRefs.current.filter((card) => card !== null);
         const delay = hasPlayedInitialProjectAnimation ? 0.1 : 1.85;
+        hasPlayedInitialProjectAnimation = true;
 
         const ctx = gsap.context(() => {
             gsap.from(projectCards, {
@@ -27,9 +28,6 @@ export default function RecentProject() {
                 stagger: 0.08,
                 ease: "power3.out",
                 clearProps: "filter,transform,opacity",
-                onComplete: () => {
-                    hasPlayedInitialProjectAnimation = true;
-                },
             });
         });
 
