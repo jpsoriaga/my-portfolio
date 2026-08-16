@@ -29,6 +29,7 @@ const IDLE_PARTICLE_HEAT = 1;
 const IDLE_PARTICLE_INTERVAL_MS = 850;
 const IDLE_PARTICLE_FADE_OUT_DURATION_MS = 2000;
 const MINIMAL_MOTION_PARTICLE_INTERVAL_MS = 1400;
+const HOVER_MEDIA_QUERY = "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 
 export default function HoverParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -66,6 +67,7 @@ export default function HoverParticles() {
     const idleParticleIndexSet = new Set<number>();
     const idleCoolingParticleIndexes = new Set<number>();
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const hoverQuery = window.matchMedia(HOVER_MEDIA_QUERY);
 
     const colors = [
       "#ff671f",
@@ -330,6 +332,8 @@ export default function HoverParticles() {
 
     function applyPointerMove() {
       pointerFrameId = 0;
+      if (!hoverQuery.matches) return;
+
       mouse.x = pendingPointer.x;
       mouse.y = pendingPointer.y;
       hoverPoint.x = mouse.x;
@@ -341,6 +345,8 @@ export default function HoverParticles() {
     }
 
     function onPointerMove(event: PointerEvent) {
+      if (!hoverQuery.matches) return;
+
       pendingPointer.x = event.clientX - parentBounds.left;
       pendingPointer.y = event.clientY - parentBounds.top;
 
@@ -382,9 +388,19 @@ export default function HoverParticles() {
       }
     };
     const handleReducedMotionChange = () => resize();
+    const handleHoverQueryChange = () => {
+      if (pointerFrameId) {
+        cancelAnimationFrame(pointerFrameId);
+        pointerFrameId = 0;
+      }
+
+      stopHoverEffect();
+      resize();
+    };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
+    hoverQuery.addEventListener("change", handleHoverQueryChange);
 
     return () => {
       stopAnimation();
@@ -399,6 +415,7 @@ export default function HoverParticles() {
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      hoverQuery.removeEventListener("change", handleHoverQueryChange);
     };
   }, []);
 
