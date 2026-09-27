@@ -1,9 +1,11 @@
 import RecentProjectCard from "./RecentProjectCard";
 import SubwayLogo from "@/assets/subway-logo.jpg"
 import IlabCICTLogo from "@/assets/ilabcict-logo.png"
+import ChioraLogo from "@/assets/chiora-logo.png"
 
 import SmartSubway from "@/assets/smart-subway-preview.jpg"
 import IlabCICT from "@/assets/ilabcict-preview.jpg"
+import Chiora from "@/assets/chiora-preview.png"
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
@@ -51,6 +53,13 @@ export default function RecentProject() {
                     }}>
                         <RecentProjectCard logo={IlabCICTLogo} title="IlabCICT" year={2026} image={IlabCICT}
                             category="Laboratory Management" tags={["Ticket Management", "Laboratory Monitoring", "Technical Support"]} href="https://i-lab-cict-web.vercel.app/" />
+                    </div>
+
+                    <div ref={(element) => {
+                        projectCardRefs.current[1] = element;
+                    }}>
+                        <RecentProjectCard logo={ChioraLogo} title="Chiora" year={2026} image={Chiora}
+                            category="Health & Fitness" tags={["Workout Tracking", "Progress Tracking", "Live Activities"]} href="https://chiora-web.vercel.app/" />
                     </div>
                 </div>
             </div>
