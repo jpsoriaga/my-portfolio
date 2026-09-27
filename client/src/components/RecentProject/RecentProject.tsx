@@ -45,7 +45,7 @@ export default function RecentProject() {
                     <div ref={(element) => {
                         projectCardRefs.current[0] = element;
                     }}>
-                        <RecentProjectCard logo={SubwayLogo} title="Smart Subway" year={2026} image={SmartSubway}
+                        <RecentProjectCard logo={SubwayLogo} title="Smart Subway" year={2025} image={SmartSubway}
                             category="Food & Beverage" tags={["POS System", "Dashboard", "Order Management"]} href="https://smart-subway-system.vercel.app/" />
                     </div>
                     <div ref={(element) => {
@@ -56,7 +56,7 @@ export default function RecentProject() {
                     </div>
 
                     <div ref={(element) => {
-                        projectCardRefs.current[1] = element;
+                        projectCardRefs.current[2] = element;
                     }}>
                         <RecentProjectCard logo={ChioraLogo} title="Chiora" year={2026} image={Chiora}
                             category="Health & Fitness" tags={["Workout Tracking", "Progress Tracking", "Live Activities"]} href="https://chiora-web.vercel.app/" />
