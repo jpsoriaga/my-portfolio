@@ -141,11 +141,11 @@ export default function HeroSection() {
                         <div data-particle-safe-zone>
                             <div ref={aboutRef}>
                                 <span className="text-xs font-light secondary-text-color">ABOUT</span>
-                                <p className="text-justify tracking-wider pb-5">I’m a BSIT student focused on web development, building projects to strengthen my understanding
-                                    of both frontend and backend systems. I enjoy creating responsive and user-friendly interfaces, and I’m currently learning the MERN stack to develop full-stack applications.</p>
+                                <p className="text-justify tracking-wider pb-5">I’m a BSIT student at Bulacan State University who builds full-stack web applications. I’ve developed a restaurant POS
+                                    and order-management system with the MERN stack, and a laboratory-management platform with React, Django, and PostgreSQL.</p>
 
-                                <p className="text-justify tracking-wider pb-5">I’m always looking for opportunities to improve my skills and gain real-world experience. My goal is to become
-                                     a reliable full-stack developer who builds practical and meaningful web applications.</p>
+                                <p className="text-justify tracking-wider pb-5">I enjoy creating responsive, user-friendly interfaces and the systems behind them. I’m currently looking for an internship
+                                     where I can contribute to real products and keep growing as a full-stack developer.</p>
                             </div>
 
                             <div ref={copyRef}>

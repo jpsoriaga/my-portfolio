@@ -4,6 +4,7 @@ import gsap from "gsap";
 const navigationItems = ["Project", "Fun", "About", "Resume"] as const;
 const navigationWidths = [20, 20, 20, 22] as const;
 const navigationBaseWidth = 350;
+const RESUME_URL = "/John-Patrick-Soriaga-Resume.pdf";
 const navigationWidthTotal = navigationWidths.reduce((total, width) => total + width, 0);
 const navigationMaxWidth = (navigationBaseWidth * navigationWidthTotal) / 100;
 
@@ -65,7 +66,19 @@ export default function Navigation({ activeItem, onNavigationChange }: Navigatio
                     }}
                 />
 
-                {navigationItems.map((item, index) => (
+                {navigationItems.map((item, index) => item === "Resume" ? (
+                    <a
+                        key={item}
+                        href={RESUME_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-10 flex h-8.5 items-center justify-center rounded-md px-1.5 text-sm tracking-wide font-light text-[#9d9996] transition-colors duration-400 ease-out hover:text-[#66615d]"
+                        style={{ flexBasis: `${(navigationWidths[index] / navigationWidthTotal) * 100}%` }}
+                    >
+                        {item}
+                        <span className="sr-only"> (opens PDF in a new tab)</span>
+                    </a>
+                ) : (
                     <button
                         key={item}
                         type="button"

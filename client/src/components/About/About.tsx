@@ -1,4 +1,5 @@
 import AboutMe from "./AboutMe";
+import Certifications from "./Certifications";
 import Education from "./Education";
 import Journey from "./Journey";
 import Stack from "./Stack";
@@ -52,6 +53,11 @@ export default function About() {
                             aboutItemRefs.current[3] = element;
                         }}>
                             <Stack />
+                        </div>
+                        <div className="md:col-span-2" ref={(element) => {
+                            aboutItemRefs.current[4] = element;
+                        }}>
+                            <Certifications />
                         </div>
                     </div>
                 </div>
