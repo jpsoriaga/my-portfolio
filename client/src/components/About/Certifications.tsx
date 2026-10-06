@@ -1,4 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
+import CursorPill from "@/components/HoverCursor/CursorPill";
+import useCursorFollow from "@/components/HoverCursor/useCursorFollow";
 import { useMemo, type CSSProperties, type ReactNode } from "react";
 
 type Certification = {
@@ -118,7 +120,7 @@ function ParticleField({ seed, width = 330, height = 112, mask }: ParticleFieldP
     );
 }
 
-const shellClassName = "group relative flex h-full overflow-hidden rounded-md transition duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/40 motion-reduce:transition-none";
+const shellClassName = "group relative flex h-full overflow-hidden rounded-md transition duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/40 motion-reduce:transition-none";
 
 type CardShellProps = {
     url?: string;
@@ -127,13 +129,22 @@ type CardShellProps = {
 };
 
 function CardShell({ url, className, children }: CardShellProps) {
+    const { isHoverable, isHovered, cursorRef, pointerHandlers } = useCursorFollow<HTMLAnchorElement>();
+
     if (!url) {
         return <div className={`${shellClassName} ${className}`}>{children}</div>;
     }
 
     return (
-        <a href={url} target="_blank" rel="noopener noreferrer" className={`${shellClassName} ${className}`}>
+        <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${shellClassName} ${className} ${isHoverable ? "cursor-none" : ""}`}
+            {...pointerHandlers}
+        >
             {children}
+            {isHoverable && <CursorPill ref={cursorRef} label="View" isVisible={isHovered} />}
         </a>
     );
 }
