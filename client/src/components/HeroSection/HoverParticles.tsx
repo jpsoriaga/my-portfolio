@@ -7,6 +7,7 @@ type Particle = {
   color: string;
   angle: number;
   heat: number;
+  fade: number;
   seed: number;
   shape: "dot" | "dash" | "star";
 };
@@ -22,14 +23,9 @@ const HOVER_IDLE_TIMEOUT_MS = 300;
 const HOVER_RADIUS = 205;
 const HOVER_FADE_OUT_DURATION_MS = 1000;
 const HOVER_FADE_IN_EASING = 0.16;
-const CONTENT_PARTICLE_GAP = 40;
-const IDLE_PARTICLE_MIN_COUNT = 1;
-const IDLE_PARTICLE_MAX_COUNT = 2;
-const IDLE_PARTICLE_HEAT = 1;
-const IDLE_PARTICLE_INTERVAL_MS = 850;
-const IDLE_PARTICLE_FADE_OUT_DURATION_MS = 2000;
-const MINIMAL_MOTION_PARTICLE_INTERVAL_MS = 1400;
-const HOVER_MEDIA_QUERY = "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+const CONTENT_PARTICLE_GAP = 24;
+const CONTENT_FADE_DISTANCE = 110;
+const HOVER_MEDIA_QUERY = "(min-width: 768px) and (hover: hover) and (pointer: fine)";
 
 export default function HoverParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -55,7 +51,6 @@ export default function HoverParticles() {
     let idleTimeoutId = 0;
     let pointerFrameId = 0;
     let lastFrameTime = 0;
-    let nextIdlePulseTime = 0;
     let isVisible = true;
     let parentBounds = { left: 0, top: 0 };
 
@@ -63,9 +58,6 @@ export default function HoverParticles() {
     const hoverPoint = { x: -9999, y: -9999 };
     const pendingPointer = { x: -9999, y: -9999 };
     const particles: Particle[] = [];
-    const idleParticleIndexes: number[] = [];
-    const idleParticleIndexSet = new Set<number>();
-    const idleCoolingParticleIndexes = new Set<number>();
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const hoverQuery = window.matchMedia(HOVER_MEDIA_QUERY);
 
@@ -84,37 +76,35 @@ export default function HoverParticles() {
       return min + Math.random() * (max - min);
     }
 
-    function getContentExclusionRects(): Rect[] {
+    function getContentRects(): Rect[] {
       const parentRect = parentEl.getBoundingClientRect();
 
       return contentEls.map((contentEl) => {
         const contentRect = contentEl.getBoundingClientRect();
 
         return {
-          left: contentRect.left - parentRect.left - CONTENT_PARTICLE_GAP,
-          right: contentRect.right - parentRect.left + CONTENT_PARTICLE_GAP,
-          top: contentRect.top - parentRect.top - CONTENT_PARTICLE_GAP,
-          bottom: contentRect.bottom - parentRect.top + CONTENT_PARTICLE_GAP,
+          left: contentRect.left - parentRect.left,
+          right: contentRect.right - parentRect.left,
+          top: contentRect.top - parentRect.top,
+          bottom: contentRect.bottom - parentRect.top,
         };
       });
     }
 
-    function isInsideRect(x: number, y: number, rect: Rect) {
-      return (
-        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
-      );
+    function distanceToRect(x: number, y: number, rect: Rect) {
+      const distanceX = Math.max(rect.left - x, 0, x - rect.right);
+      const distanceY = Math.max(rect.top - y, 0, y - rect.bottom);
+
+      return Math.hypot(distanceX, distanceY);
     }
 
     function buildParticles() {
       particles.length = 0;
-      idleParticleIndexes.length = 0;
-      idleParticleIndexSet.clear();
-      idleCoolingParticleIndexes.clear();
 
       const hasReducedMotion = reducedMotionQuery.matches;
       const gap = hasReducedMotion ? 58 : width < 700 ? 32 : 38;
       const margin = 24;
-      const contentExclusionRects = getContentExclusionRects();
+      const contentRects = getContentRects();
 
       for (let y = margin; y < height - margin; y += gap) {
         for (let x = margin; x < width - margin; x += gap) {
@@ -122,13 +112,19 @@ export default function HoverParticles() {
           const particleX = x + random(-4, 4);
           const particleY = y + random(-4, 4);
 
-          if (
-            contentExclusionRects.some((rect) =>
-              isInsideRect(particleX, particleY, rect),
-            )
-          ) {
-            continue;
-          }
+          const contentDistance = Math.min(
+            Infinity,
+            ...contentRects.map((rect) =>
+              distanceToRect(particleX, particleY, rect),
+            ),
+          );
+
+          if (contentDistance < CONTENT_PARTICLE_GAP) continue;
+
+          const fadeProgress = Math.min(
+            1,
+            (contentDistance - CONTENT_PARTICLE_GAP) / CONTENT_FADE_DISTANCE,
+          );
 
           particles.push({
             x: particleX,
@@ -137,35 +133,10 @@ export default function HoverParticles() {
             color: colors[Math.floor(Math.random() * colors.length)],
             angle: random(0, Math.PI * 2),
             heat: 0,
+            fade: fadeProgress * fadeProgress * (3 - 2 * fadeProgress),
             seed: Math.random() * 1000,
             shape: shapes[Math.floor(Math.random() * shapes.length)],
           });
-        }
-      }
-    }
-
-    function pickIdleParticles() {
-      for (const index of idleParticleIndexes) {
-        idleCoolingParticleIndexes.add(index);
-      }
-
-      idleParticleIndexes.length = 0;
-      idleParticleIndexSet.clear();
-      if (particles.length === 0) return;
-
-      const maxCount = Math.min(
-        reducedMotionQuery.matches ? IDLE_PARTICLE_MIN_COUNT : IDLE_PARTICLE_MAX_COUNT,
-        particles.length,
-      );
-      const count = Math.floor(random(IDLE_PARTICLE_MIN_COUNT, maxCount + 1));
-
-      while (idleParticleIndexes.length < count) {
-        const index = Math.floor(random(0, particles.length));
-
-        if (!idleParticleIndexSet.has(index)) {
-          idleParticleIndexes.push(index);
-          idleParticleIndexSet.add(index);
-          idleCoolingParticleIndexes.delete(index);
         }
       }
     }
@@ -187,6 +158,7 @@ export default function HoverParticles() {
 
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildParticles();
+      startAnimation();
     }
 
     function startAnimation() {
@@ -228,25 +200,9 @@ export default function HoverParticles() {
       context.clearRect(0, 0, width, height);
       const fadeOutEasing =
         1 - Math.pow(0.05, deltaTime / HOVER_FADE_OUT_DURATION_MS);
-      const idleFadeOutEasing =
-        1 - Math.pow(0.05, deltaTime / IDLE_PARTICLE_FADE_OUT_DURATION_MS);
+      let hasHeat = false;
 
-      if (mouse.active) {
-        idleParticleIndexes.length = 0;
-        idleParticleIndexSet.clear();
-        idleCoolingParticleIndexes.clear();
-        nextIdlePulseTime = time + IDLE_PARTICLE_INTERVAL_MS;
-      } else if (time >= nextIdlePulseTime) {
-        pickIdleParticles();
-        nextIdlePulseTime =
-          time +
-          (reducedMotionQuery.matches
-            ? MINIMAL_MOTION_PARTICLE_INTERVAL_MS
-            : IDLE_PARTICLE_INTERVAL_MS);
-      }
-
-      for (let index = 0; index < particles.length; index++) {
-        const particle = particles[index];
+      for (const particle of particles) {
         const distanceX = hoverPoint.x - particle.x;
         const distanceY = hoverPoint.y - particle.y;
         const hoverDistanceSquared = distanceX * distanceX + distanceY * distanceY;
@@ -254,31 +210,19 @@ export default function HoverParticles() {
         const hoverDistance = isInsideHoverZone
           ? Math.sqrt(hoverDistanceSquared)
           : HOVER_RADIUS;
-        const hoverInfluence = mouse.active
+        const influence = mouse.active
           ? Math.max(0, 1 - hoverDistance / HOVER_RADIUS) ** 2
           : 0;
-        const idleInfluence =
-          !mouse.active && idleParticleIndexSet.has(index)
-            ? IDLE_PARTICLE_HEAT
-            : 0;
-        const influence = Math.max(hoverInfluence, idleInfluence);
         const shouldFadeSlowly = !mouse.active && isInsideHoverZone;
-        const isIdleCooling =
-          !mouse.active && idleCoolingParticleIndexes.has(index);
         const heatEasing =
-          influence > particle.heat
-            ? HOVER_FADE_IN_EASING
-            : isIdleCooling
-              ? idleFadeOutEasing
-              : shouldFadeSlowly
-                ? fadeOutEasing
-                : HOVER_FADE_IN_EASING;
+          influence <= particle.heat && shouldFadeSlowly
+            ? fadeOutEasing
+            : HOVER_FADE_IN_EASING;
 
         particle.heat += (influence - particle.heat) * heatEasing;
 
-        if (isIdleCooling && particle.heat < 0.01) {
-          idleCoolingParticleIndexes.delete(index);
-        }
+        if (particle.heat < 0.01) particle.heat = 0;
+        else hasHeat = true;
 
         const size = particle.size * (1 + particle.heat * 5);
         const shimmerX =
@@ -289,7 +233,7 @@ export default function HoverParticles() {
         context.save();
         context.translate(particle.x + shimmerX, particle.y + shimmerY);
         context.rotate(particle.angle + particle.heat * 1.2);
-        context.globalAlpha = 0.35 + particle.heat * 0.65;
+        context.globalAlpha = (0.35 + particle.heat * 0.65) * particle.fade;
         context.fillStyle =
           particle.heat > 0.08
             ? particle.color
@@ -318,7 +262,7 @@ export default function HoverParticles() {
         context.restore();
       }
 
-      if (isVisible && !document.hidden) {
+      if ((mouse.active || hasHeat) && isVisible && !document.hidden) {
         frameId = requestAnimationFrame(animate);
       }
     }
@@ -339,6 +283,7 @@ export default function HoverParticles() {
       hoverPoint.x = mouse.x;
       hoverPoint.y = mouse.y;
       mouse.active = true;
+      startAnimation();
 
       window.clearTimeout(idleTimeoutId);
       idleTimeoutId = window.setTimeout(stopHoverEffect, HOVER_IDLE_TIMEOUT_MS);
@@ -360,7 +305,6 @@ export default function HoverParticles() {
     }
 
     resize();
-    startAnimation();
 
     parentEl.addEventListener("pointermove", onPointerMove, { passive: true });
     parentEl.addEventListener("pointerleave", onPointerLeave);
