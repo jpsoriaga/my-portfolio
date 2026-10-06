@@ -1,4 +1,5 @@
-import MusicTaste from "./MusicTaste";
+import CubeBand from "./CubeBand";
+import FragranceShelf from "./FragranceShelf";
 import OutsideWork from "./OutsideWork";
 import PhotoStack from "./PhotoStack";
 import { useLayoutEffect, useRef } from "react";
@@ -7,7 +8,8 @@ import gsap from "gsap";
 export default function Personal() {
     const outsideWorkRef = useRef<HTMLDivElement | null>(null);
     const photoStackRef = useRef<HTMLDivElement | null>(null);
-    const musicTasteRef = useRef<HTMLDivElement | null>(null);
+    const fragranceShelfRef = useRef<HTMLDivElement | null>(null);
+    const cubeBandRef = useRef<HTMLDivElement | null>(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -30,7 +32,15 @@ export default function Personal() {
                 clearProps: "transform,opacity",
             }, "-=0.42");
 
-            timeline.from(musicTasteRef.current, {
+            timeline.from(fragranceShelfRef.current, {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power3.out",
+                clearProps: "transform,opacity",
+            }, "-=0.42");
+
+            timeline.from(cubeBandRef.current, {
                 y: 20,
                 opacity: 0,
                 duration: 0.5,
@@ -51,12 +61,17 @@ export default function Personal() {
                             <div ref={outsideWorkRef}>
                                 <OutsideWork />
                             </div>
-                            <div ref={musicTasteRef}>
-                                <MusicTaste />
+                            <div ref={fragranceShelfRef}>
+                                <FragranceShelf />
                             </div>
                         </div>
-                        <div ref={photoStackRef}>
-                            <PhotoStack />
+                        <div className="flex flex-col justify-between gap-y-8">
+                            <div ref={photoStackRef}>
+                                <PhotoStack />
+                            </div>
+                            <div ref={cubeBandRef}>
+                                <CubeBand />
+                            </div>
                         </div>
                     </div>
                 </div>
