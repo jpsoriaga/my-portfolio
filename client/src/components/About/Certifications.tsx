@@ -22,6 +22,12 @@ type Particle = {
 // `url` is optional: cards without one are not clickable and show no arrow.
 const certifications: Certification[] = [
     {
+        title: "AppBuildersPH Hackathon 2026",
+        issuer: "AppBuildersPH · Team Busseng",
+        year: "2026",
+        url: "/certificates/appbuildersph-hackathon-2026.pdf",
+    },
+    {
         title: "IT Specialist: Python",
         issuer: "Certiport, a Pearson VUE business",
         year: "2026",
