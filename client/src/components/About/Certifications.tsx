@@ -88,7 +88,7 @@ type ParticleFieldProps = {
     mask?: string;
 };
 
-function ParticleField({ seed, width = 330, height = 112, mask }: ParticleFieldProps) {
+export function ParticleField({ seed, width = 330, height = 112, mask }: ParticleFieldProps) {
     const particles = useMemo(() => buildParticles(seed, width, height), [seed, width, height]);
 
     return (
@@ -128,7 +128,7 @@ type CardShellProps = {
     children: ReactNode;
 };
 
-function CardShell({ url, className, children }: CardShellProps) {
+export function CardShell({ url, className, children }: CardShellProps) {
     const { isHoverable, isHovered, cursorRef, pointerHandlers } = useCursorFollow<HTMLAnchorElement>();
 
     if (!url) {
@@ -149,7 +149,7 @@ function CardShell({ url, className, children }: CardShellProps) {
     );
 }
 
-function Arrow({ className = "h-4 w-4 text-[#9d9996]" }: { className?: string }) {
+export function Arrow({ className = "h-4 w-4 text-[#9d9996]" }: { className?: string }) {
     return (
         <ArrowUpRight
             className={`shrink-0 transition duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black group-focus-visible:text-black ${className}`}

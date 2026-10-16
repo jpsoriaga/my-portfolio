@@ -1,3 +1,4 @@
+import HackathonBanner from "./HackathonBanner";
 import RecentProjectCard from "./RecentProjectCard";
 import SubwayLogo from "@/assets/subway-logo.jpg"
 import IlabCICTLogo from "@/assets/ilabcict-logo.png"
@@ -31,6 +32,7 @@ const projects = [
     {
         logo: LinewiseLogo, title: "Linewise", year: 2026, image: Linewise,
         category: "Call Center QA", tags: ["Local AI", "Call Scoring", "Privacy Protection"], href: "https://github.com/Polstuds27/Linewise",
+        badge: "6th · Hackathon",
     },
     {
         logo: ResiteLogo, title: "Resite", year: 2026, image: Resite,
@@ -71,10 +73,15 @@ export default function RecentProject() {
     return (
         <section className="relative isolate w-full overflow-hidden pt-10">
             <div className="relative z-10 mx-auto w-full max-w-[1120px] px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16 2xl:px-10">
+                <div className="mb-8 md:mb-10" ref={(element) => {
+                    projectCardRefs.current[0] = element;
+                }}>
+                    <HackathonBanner />
+                </div>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-5">
                     {projectsNewestFirst.map((project, index) => (
                         <div key={project.title} ref={(element) => {
-                            projectCardRefs.current[index] = element;
+                            projectCardRefs.current[index + 1] = element;
                         }}>
                             <RecentProjectCard {...project} />
                         </div>
