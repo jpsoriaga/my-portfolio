@@ -1,19 +1,16 @@
-
 import { Trophy } from "lucide-react";
+import { handleLinkClick } from "@/router";
 import ProjectImageHover from "./ProjectImageHover";
+import { getProjectPath, type Project } from "./projects";
 
 type RecentProjectCardProps = {
-    logo: string;
-    title: string;
-    year: number;
-    image: string;
-    category: string;
-    tags: string[];
-    href: string;
-    badge?: string;
+    project: Project;
 }
 
-export default function RecentProjectCard({ logo, title, year, image, category, tags, href, badge }: RecentProjectCardProps) {
+export default function RecentProjectCard({ project }: RecentProjectCardProps) {
+    const { logo, title, year, image, category, tags, href, badge, details } = project;
+    const projectPath = getProjectPath(project);
+
     return (
         <>
             <div className="group flex w-full min-w-0 flex-col gap-y-3">
@@ -31,12 +28,18 @@ export default function RecentProjectCard({ logo, title, year, image, category, 
                     <span className="shrink-0 text-sm font-light secondary-text-color">{year}</span>
                 </div>
 
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                    <ProjectImageHover image={image} alt={`${title} project preview`} />
-                </a>
+                {details ? (
+                    <a href={projectPath} onClick={(event) => handleLinkClick(event, projectPath)} aria-label={`View ${title} project`}>
+                        <ProjectImageHover image={image} alt={`${title} project preview`} />
+                    </a>
+                ) : (
+                    <a href={href} target="_blank" rel="noopener noreferrer">
+                        <ProjectImageHover image={image} alt={`${title} project preview`} />
+                    </a>
+                )}
 
                 <h1>{category}</h1>
-                <div className="flex flex-wrap gap-2">  
+                <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
                         <span
                             key={tag}
