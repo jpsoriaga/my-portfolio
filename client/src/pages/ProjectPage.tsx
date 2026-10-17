@@ -205,34 +205,26 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                 </section>
 
                 {nextProject.slug !== project.slug && (
-                    <section ref={setPageItemRef(7)} className="flex flex-col gap-y-5">
-                        <h2 className="text-xs font-light secondary-text-color">NEXT PROJECT</h2>
+                    <section ref={setPageItemRef(7)} className="border-t border-black/[0.06] pt-10 md:pt-14">
                         <a
                             href={nextProject.details ? nextProjectPath : nextProject.href}
                             onClick={nextProject.details ? (event) => handleLinkClick(event, nextProjectPath) : undefined}
                             target={nextProject.details ? undefined : "_blank"}
                             rel={nextProject.details ? undefined : "noopener noreferrer"}
-                            className="group flex items-center justify-between gap-6 overflow-hidden rounded-md p-4 shadow-[0_0_0_1px_rgba(0,0,0,0.08)] transition duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_6px_12px_rgba(0,0,0,0.06)] motion-reduce:transition-none sm:p-5"
+                            aria-label={`Next project: ${nextProject.title}`}
+                            className="group flex items-end justify-between gap-6"
                         >
-                            <div className="flex min-w-0 items-center gap-x-3">
-                                <img src={nextProject.logo} alt="" width={32} height={32} loading="lazy" decoding="async" className="h-8 w-8 shrink-0 rounded-md" />
-                                <div className="flex min-w-0 flex-col">
-                                    <span className="truncate text-lg">{nextProject.title}</span>
-                                    <span className="truncate text-sm font-light secondary-text-color">{nextProject.category}</span>
+                            <div className="flex min-w-0 flex-col gap-y-3">
+                                <span className="text-xs font-light secondary-text-color">NEXT PROJECT</span>
+                                <div className="flex min-w-0 items-center gap-x-3">
+                                    <img src={nextProject.logo} alt="" width={32} height={32} loading="lazy" decoding="async" className="h-7 w-7 shrink-0 rounded-md md:h-8 md:w-8" />
+                                    <span className="truncate text-2xl font-medium md:text-3xl">{nextProject.title}</span>
                                 </div>
+                                <p className="font-light tracking-wide secondary-text-color">
+                                    {nextProject.details?.summary ?? nextProject.category}
+                                </p>
                             </div>
-                            <div className="flex shrink-0 items-center gap-x-6">
-                                <img
-                                    src={nextProject.image}
-                                    alt=""
-                                    width={1200}
-                                    height={783}
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="hidden w-40 rounded-sm shadow-[0_0_0_1px_rgba(0,0,0,0.08)] transition-transform duration-[450ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.03] motion-reduce:transition-none sm:block md:w-48"
-                                />
-                                <ArrowRight className="h-5 w-5 secondary-text-color transition-transform duration-300 ease-out group-hover:translate-x-0.5" strokeWidth={1.75} aria-hidden="true" />
-                            </div>
+                            <ArrowRight className="mb-1 h-6 w-6 shrink-0 secondary-text-color transition duration-300 ease-out group-hover:translate-x-1 group-hover:text-black motion-reduce:transition-none" strokeWidth={1.5} aria-hidden="true" />
                         </a>
                     </section>
                 )}
