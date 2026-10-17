@@ -14,7 +14,7 @@ import SmartSubwayOrderLine from "@/assets/smart-subway/pos-order-line.png"
 import SmartSubwayDashboard from "@/assets/smart-subway/admin-dashboard.png"
 import SmartSubwayOrderDetails from "@/assets/smart-subway/order-details.png"
 import SmartSubwayMenu from "@/assets/smart-subway/menu-management.png"
-import SmartSubwayConfirmOrder from "@/assets/smart-subway/confirm-order.png"
+import SmartSubwayTransactions from "@/assets/smart-subway/transactions.png"
 
 import IlabCICTDashboard from "@/assets/ilabcict/dashboard.png"
 import IlabCICTTickets from "@/assets/ilabcict/manage-ticket.png"
@@ -113,9 +113,9 @@ export const projects: Project[] = [
             screenshots: [
                 { image: SmartSubwayOrderLine, caption: "Order line: the live order queue, the menu, and the current order with payment summary.", width: 2000, height: 1125 },
                 { image: SmartSubwayDashboard, caption: "Admin dashboard with today's sales, order status and sales overview.", width: 2000, height: 1125 },
-                { image: SmartSubwayOrderDetails, caption: "Order details sheet for moving an order into the kitchen.", width: 2000, height: 1125 },
+                { image: SmartSubwayOrderDetails, caption: "Order details sheet with items, payment summary and status controls.", width: 2000, height: 1125 },
                 { image: SmartSubwayMenu, caption: "Menu management with availability toggles.", width: 2000, height: 1125 },
-                { image: SmartSubwayConfirmOrder, caption: "Confirming an order before it's placed.", width: 2000, height: 1125 },
+                { image: SmartSubwayTransactions, caption: "Transactions: the sales ledger with payment mix and receipt details.", width: 2000, height: 1125 },
             ],
         },
     },
