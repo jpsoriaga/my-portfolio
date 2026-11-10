@@ -58,3 +58,69 @@ body {
     transform: rotate(0deg) translateY(-8px) scale(1.05);
   }
 }
+
+/* Siamese cat in the Fun section */
+.siamese-cat .cat-leg,
+.siamese-cat .cat-tail,
+.siamese-cat .cat-eye,
+.siamese-cat .cat-breathe {
+  transform-box: fill-box;
+}
+
+.siamese-cat .cat-leg {
+  transform-origin: top center;
+}
+
+.siamese-cat .is-walk .cat-leg-a { animation: cat-step 0.5s ease-in-out infinite alternate; }
+.siamese-cat .is-walk .cat-leg-b { animation: cat-step 0.5s ease-in-out infinite alternate-reverse; }
+.siamese-cat .is-run .cat-leg-a { animation: cat-step 0.2s ease-in-out infinite alternate; }
+.siamese-cat .is-run .cat-leg-b { animation: cat-step 0.2s ease-in-out infinite alternate-reverse; }
+.siamese-cat .is-jump .cat-leg-a { transform: rotate(-28deg); }
+.siamese-cat .is-jump .cat-leg-b { transform: rotate(24deg); }
+.siamese-cat .is-walk .cat-walk-body { animation: cat-bob 0.25s ease-in-out infinite alternate; }
+.siamese-cat .is-run .cat-walk-body { animation: cat-bob 0.1s ease-in-out infinite alternate; }
+
+.siamese-cat .cat-tail {
+  transform-origin: 100% 100%;
+  animation: cat-swish 1.8s ease-in-out infinite alternate;
+}
+
+.siamese-cat .cat-tail-sit {
+  transform-origin: 100% 50%;
+  animation-duration: 2.6s;
+}
+
+.siamese-cat .cat-eye {
+  transform-origin: center;
+  animation: cat-blink 5s infinite;
+}
+
+.siamese-cat .cat-breathe {
+  transform-origin: center bottom;
+  animation: cat-breathe 3.2s ease-in-out infinite;
+}
+
+.siamese-cat .cat-z {
+  animation: cat-z 2.8s ease-out infinite;
+}
+
+.siamese-cat .cat-z-2 { animation-delay: 1.4s; }
+.siamese-cat .cat-hop { animation: cat-hop 0.45s cubic-bezier(0.3, 0.7, 0.4, 1); }
+
+.siamese-cat .cat-bubble {
+  transform-origin: 40% 100%;
+  animation: cat-bubble 1.8s ease-out forwards;
+}
+
+@keyframes cat-step { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes cat-bob { from { transform: translateY(0); } to { transform: translateY(-1.2px); } }
+@keyframes cat-swish { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+@keyframes cat-blink { 0%, 93%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes cat-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.05); } }
+@keyframes cat-z { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(6px, -10px); } }
+@keyframes cat-hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-14px); } }
+@keyframes cat-bubble { 0% { opacity: 0; transform: translateX(-50%) scale(0.3) rotate(-8deg); } 10% { opacity: 1; transform: translateX(-50%) scale(1.12) rotate(2deg); } 18% { transform: translateX(-50%) scale(1) rotate(0); } 82% { opacity: 1; transform: translateX(-50%) scale(1); } 100% { opacity: 0; transform: translateX(-50%) scale(0.92); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .siamese-cat * { animation: none !important; }
+}

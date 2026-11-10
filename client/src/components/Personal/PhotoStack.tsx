@@ -39,7 +39,7 @@ const photos = [
 export default function PhotoStack() {
     return (
         <div className="mt-8 w-full overflow-visible px-4 md:px-6 lg:px-0">
-            <div className="mx-auto grid w-full max-w-[calc(100%-2rem)] grid-cols-2 gap-4 overflow-visible sm:relative sm:block sm:h-[248px] sm:max-w-[608px]">
+            <div data-cat-perch className="mx-auto grid w-full max-w-[calc(100%-2rem)] grid-cols-2 gap-4 overflow-visible sm:relative sm:block sm:h-[248px] sm:max-w-[608px]">
                 {photos.map((photo) => (
                     <div
                         aria-label={photo.label}

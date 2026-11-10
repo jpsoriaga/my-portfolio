@@ -2,6 +2,7 @@ import CubeBand from "./CubeBand";
 import FragranceShelf from "./FragranceShelf";
 import OutsideWork from "./OutsideWork";
 import PhotoStack from "./PhotoStack";
+import SiameseCat from "./SiameseCat";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
@@ -58,10 +59,10 @@ export default function Personal() {
                 <div className="relative z-10 mx-auto w-full max-w-[1120px] px-6 sm:px-8 md:px-10 lg:px-14 xl:px-16 2xl:px-10">
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-5">
                         <div className="flex flex-col gap-y-5">
-                            <div ref={outsideWorkRef}>
+                            <div ref={outsideWorkRef} data-cat-perch>
                                 <OutsideWork />
                             </div>
-                            <div ref={fragranceShelfRef}>
+                            <div ref={fragranceShelfRef} data-cat-perch>
                                 <FragranceShelf />
                             </div>
                         </div>
@@ -69,11 +70,12 @@ export default function Personal() {
                             <div ref={photoStackRef}>
                                 <PhotoStack />
                             </div>
-                            <div ref={cubeBandRef}>
+                            <div ref={cubeBandRef} data-cat-perch>
                                 <CubeBand />
                             </div>
                         </div>
                     </div>
+                    <SiameseCat />
                 </div>
             </section>
         </>

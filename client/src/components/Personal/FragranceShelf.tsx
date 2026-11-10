@@ -29,7 +29,7 @@ export default function FragranceShelf() {
                 <span className="text-xs font-light secondary-text-color">FRAGRANCE SHELF</span>
                 <ul className="flex flex-col divide-y divide-black/5">
                     {fragrances.map((fragrance, index) => (
-                        <li key={index} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-3 first:pt-0 last:pb-0">
+                        <li key={index} data-cat-perch={index > 0 ? "" : undefined} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-3 first:pt-0 last:pb-0">
                             <div className="min-w-0">
                                 <h2>{fragrance.name}</h2>
                                 <p className="secondary-text-color font-light tracking-wide">{fragrance.house}</p>
