@@ -205,12 +205,13 @@ export const projects: Project[] = [
     },
     {
         slug: "linewise", logo: LinewiseLogo, title: "Linewise", year: 2026, image: Linewise,
-        category: "Call Center QA", tags: ["Local AI", "Call Scoring", "Privacy Protection"], href: "https://github.com/Polstuds27/Linewise",
+        category: "Call Center QA", tags: ["Local AI", "Call Scoring", "Privacy Protection"], href: "https://linewise-hackathon.vercel.app/",
         badge: "6th · Hackathon",
         details: {
             summary: "Local-AI quality checks for call center calls.",
             isTeamProject: true,
             links: [
+                { label: "Website", href: "https://linewise-hackathon.vercel.app/" },
                 { label: "GitHub", href: "https://github.com/Polstuds27/Linewise" },
                 { label: "Demo video", href: "https://github.com/Polstuds27/Linewise/blob/main/docs/linewise-demo.mp4" },
                 { label: "LinkedIn post", href: "https://lnkd.in/p/gXKWvggd" },
