@@ -28,7 +28,7 @@ import ChioraProgressAndHistory from "@/assets/chiora/progress-and-history.png"
 import BridgeLogo from "@/assets/bridge-logo.svg"
 import Bridge from "@/assets/bridge-mockup.png"
 import BridgeChatAndPanel from "@/assets/bridge/chat-and-panel.png"
-import BridgeSession from "@/assets/bridge/session.png"
+import BridgeSettings from "@/assets/bridge/settings.png"
 import BridgeActivity from "@/assets/bridge/activity.png"
 
 import LinewiseCallDetail from "@/assets/linewise/04-call-detail.png"
@@ -321,8 +321,8 @@ export const projects: Project[] = [
                 { title: "Full auto that knows when to stop", description: "A loop guard pauses when the same command fails the same way three times, or the same file is written with the same content." },
             ],
             screenshots: [
-                { image: BridgeChatAndPanel, caption: "Diff, delete, rename and command cards under the chat's reply, and the side panel.", width: 2000, height: 1234 },
-                { image: BridgeSession, caption: "The desktop app: setup checklist, project, pairing and mode.", width: 2000, height: 1234 },
+                { image: BridgeChatAndPanel, caption: "A diff card under the chat's reply, with the side panel showing the mode and activity.", width: 2000, height: 1345 },
+                { image: BridgeSettings, caption: "Settings in the desktop app: the local connection, protected files and gated files.", width: 2000, height: 1234 },
                 { image: BridgeActivity, caption: "Activity: every write, delete, rename and command, with Undo.", width: 2000, height: 1234 },
             ],
         },
