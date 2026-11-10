@@ -22,9 +22,14 @@ import IlabCICTLaboratories from "@/assets/ilabcict/manage-laboratory.png"
 import IlabCICTWeeklyReports from "@/assets/ilabcict/weekly-reports.png"
 import IlabCICTRepairLogs from "@/assets/ilabcict/repair-logs.png"
 
-import ChioraActiveWorkout from "@/assets/chiora/active-workout.png"
-import ChioraPillars from "@/assets/chiora/product-pillars.png"
-import ChioraLocalFirst from "@/assets/chiora/local-first.png"
+import ChioraHomeAndWorkout from "@/assets/chiora/home-and-workout.png"
+import ChioraProgressAndHistory from "@/assets/chiora/progress-and-history.png"
+
+import BridgeLogo from "@/assets/bridge-logo.svg"
+import Bridge from "@/assets/bridge-mockup.png"
+import BridgeChatAndPanel from "@/assets/bridge/chat-and-panel.png"
+import BridgeSession from "@/assets/bridge/session.png"
+import BridgeActivity from "@/assets/bridge/activity.png"
 
 import LinewiseCallDetail from "@/assets/linewise/04-call-detail.png"
 import LinewiseRedaction from "@/assets/linewise/05-redacted-transcript-and-coaching-note.png"
@@ -163,18 +168,18 @@ export const projects: Project[] = [
     },
     {
         slug: "chiora", logo: ChioraLogo, title: "Chiora", year: 2026, image: Chiora,
-        category: "Health & Fitness", tags: ["Workout Tracking", "Progress Tracking", "Live Activities"], href: "https://chiora-web.vercel.app/",
+        category: "Health & Fitness", tags: ["Workout Tracking", "Progress Tracking", "Offline"], href: "https://chiora-web.vercel.app/",
         details: {
             summary: "A workout tracker for logging training fast and seeing progress clearly.",
             links: [
                 { label: "Website", href: "https://chiora-web.vercel.app/" },
             ],
             facts: [
-                { label: "PLATFORM", value: "iOS · React Native and Expo" },
-                { label: "TIMELINE", value: "Aug – Oct 2026" },
+                { label: "PLATFORM", value: "iOS and Android · React Native and Expo" },
+                { label: "TIMELINE", value: "Aug – Nov 2026" },
                 { label: "TYPE", value: "Personal project" },
             ],
-            stack: ["React Native", "Expo", "TypeScript", "Expo Router", "NativeWind", "Reanimated", "SQLite", "Supabase", "Swift"],
+            stack: ["React Native", "Expo", "TypeScript", "Expo Router", "NativeWind", "Reanimated", "SQLite", "Swift", "Maestro"],
             problem: [
                 "Logging a workout should take seconds between sets, but most fitness apps bury that behind accounts, feeds and dashboards. I wanted something that gets out of the way during training and still shows real progress over weeks.",
             ],
@@ -182,19 +187,19 @@ export const projects: Project[] = [
             features: [
                 { title: "Focused workout logging", description: "Log weight and reps with your previous performance beside each set, plus exercise notes and a workout summary." },
                 { title: "Rest timer everywhere", description: "The rest timer runs in the app, in a Live Activity and in the Dynamic Island." },
-                { title: "Training structure", description: "Routines, a reusable exercise library, and a weekly plan with routine rotation." },
-                { title: "Progress", description: "Strength progression, estimated max lift, training volume, body weight trends and same-pose progress photo comparison." },
+                { title: "Training structure", description: "Routines, custom exercises in a reusable library, and a weekly plan with routine rotation and training-day reminders." },
+                { title: "Progress", description: "Strength progression, estimated max lift, training volume, weigh-ins with goal progress, and same-pose progress photo comparison." },
+                { title: "History", description: "A weekly calendar and every past workout, searchable by workout, routine or exercise, with filters." },
                 { title: "Home Screen widgets", description: "Small and medium widgets show the active workout, rest timer or next training day." },
             ],
             challenges: [
-                { title: "Local-first data", description: "Everything reads and writes an on-device SQLite database with versioned, data-preserving migrations. Cloud backup through Supabase is optional and never sits in the way of a workout." },
+                { title: "Local-only data", description: "Everything reads and writes an on-device SQLite database with versioned, data-preserving migrations. There are no accounts or cloud services; data leaves the phone only when you export a backup file." },
                 { title: "A timer that stays accurate", description: "The rest timer, notifications and the native Swift Live Activity all share one stored deadline, so they agree with each other without updating JavaScript every second." },
-                { title: "Native feel", description: "Native iOS tabs, sheets and controls with SF Symbols where they're supported, and working fallbacks on Android." },
+                { title: "Native on both platforms", description: "Native iOS tabs, sheets and controls with SF Symbols, and Android support with its own dialogs, notifications and bottom bar, checked with Maestro test flows." },
             ],
             screenshots: [
-                { image: ChioraActiveWorkout, caption: "An active workout with the rest timer and logged sets.", width: 2000, height: 1246 },
-                { image: ChioraPillars, caption: "Workout logging, progress, training structure and local-first data.", width: 2000, height: 941 },
-                { image: ChioraLocalFirst, caption: "Train locally, back up when ready, and restore when needed.", width: 2000, height: 508 },
+                { image: ChioraHomeAndWorkout, caption: "Home with what's up next, an active set with the rest timer, and routines.", width: 2000, height: 1250 },
+                { image: ChioraProgressAndHistory, caption: "Weigh-ins in Progress, and History with the weekly calendar.", width: 2000, height: 1250 },
             ],
         },
     },
@@ -281,6 +286,44 @@ export const projects: Project[] = [
                 { image: ResiteTemplates, caption: "Picking a template, each one shown with your own details.", width: 2000, height: 1250 },
                 { image: ResiteTemplateShowcase, caption: "Templates on the landing page, shown with invented sample resumes.", width: 2000, height: 1648 },
                 { image: ResiteAIStudio, caption: "The AI studio suggests three designs from your resume.", width: 2000, height: 1345 },
+            ],
+        },
+    },
+    {
+        slug: "bridge", logo: BridgeLogo, title: "Bridge", year: 2026, image: Bridge,
+        category: "Developer Tools", tags: ["Chrome Extension", "Desktop App", "Local Only"], href: "https://trybridge-landingpage.vercel.app/",
+        details: {
+            summary: "Lets the ChatGPT web chat edit a project on your computer, with you in charge.",
+            links: [
+                { label: "Website", href: "https://trybridge-landingpage.vercel.app/" },
+                { label: "GitHub", href: "https://github.com/jpsoriaga/bridge" },
+            ],
+            facts: [
+                { label: "PLATFORM", value: "macOS, Windows and Linux · Chrome extension" },
+                { label: "TIMELINE", value: "Oct – Nov 2026" },
+                { label: "TYPE", value: "Personal project · open beta" },
+            ],
+            stack: ["Electron", "electron-vite", "React", "TypeScript", "Chrome Extension (MV3)", "WebSocket", "Zod", "Vitest", "Playwright"],
+            problem: [
+                "I couldn't afford the paid AI coding tools, but I had the ChatGPT web chat. So I pasted my files in one by one and copied every answer back by hand. It worked, but it was slow and easy to get wrong.",
+            ],
+            overview: "Bridge does that copying for you. The chat writes whole files in a simple format; the extension shows each one as a diff card under the reply, and the desktop app writes it into your project only when you click Apply. Everything runs on your computer, with no accounts and nothing sent anywhere else.",
+            features: [
+                { title: "Diff cards in the chat", description: "Each file the chat writes shows up under the reply as a diff against your copy, with Apply and Reject. Deletes, renames and commands get their own cards." },
+                { title: "Undo for everything", description: "Every write is backed up first, so any change can be undone from the card or from the app's Activity." },
+                { title: "Commands you allow", description: "The chat can run tests or start a dev server, but only commands on your allowlist, and dev servers keep running in the background." },
+                { title: "Three modes", description: "Manual reviews every edit, Auto-apply writes as soon as the reply finishes, and the opt-in Full auto keeps going until the work is done." },
+                { title: "Project-aware prompts", description: "Start session gives the chat your file list and how the project is built, so it follows your structure and conventions." },
+            ],
+            challenges: [
+                { title: "A sandbox for the chat", description: "The app checks every path against the project folder, blocks protected files, and holds lockfiles and configs for review. The extension only talks to the app over 127.0.0.1, after pairing with a code and a fingerprint." },
+                { title: "Reading a chat that keeps changing", description: "Replies stream in and the page changes often, so the parser only acts on finished replies, rejects any marker that holds another marker, and offers a format reminder when the chat slips." },
+                { title: "Full auto that knows when to stop", description: "A loop guard pauses when the same command fails the same way three times, or the same file is written with the same content." },
+            ],
+            screenshots: [
+                { image: BridgeChatAndPanel, caption: "Diff, delete, rename and command cards under the chat's reply, and the side panel.", width: 2000, height: 1234 },
+                { image: BridgeSession, caption: "The desktop app: setup checklist, project, pairing and mode.", width: 2000, height: 1234 },
+                { image: BridgeActivity, caption: "Activity: every write, delete, rename and command, with Undo.", width: 2000, height: 1234 },
             ],
         },
     },
