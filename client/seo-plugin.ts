@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Plugin } from "vite";
 
@@ -26,11 +26,19 @@ function escapeAttr(value: string) {
     return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
 
-function withPageMeta(html: string, { title, description, url }: { title: string; description: string; url: string }) {
+function withPageMeta(
+    html: string,
+    { title, description, url, image }: { title: string; description: string; url: string; image?: string },
+) {
     const t = escapeAttr(title);
     const d = escapeAttr(description);
+    const withImage = image
+        ? html
+              .replace(/(<meta (?:property|name)="(?:og:image|twitter:image)" content=")[^"]*"/g, `$1${image}"`)
+              .replace(/(<meta property="og:image:alt" content=")[^"]*"/, `$1${t}"`)
+        : html;
 
-    return html
+    return withImage
         .replace(/<title>[^<]*<\/title>/, `<title>${t}</title>`)
         .replace(/(<meta (?:name|property)="(?:description|og:description|twitter:description)" content=")[^"]*"/g, `$1${d}"`)
         .replace(/(<meta (?:property|name)="(?:og:title|twitter:title)" content=")[^"]*"/g, `$1${t}"`)
@@ -66,6 +74,10 @@ export function seoPages(): Plugin {
                         title: `${project.title} | ${NAME}`,
                         description: project.summary,
                         url: `${SITE_URL}/projects/${project.slug}`,
+                        // public/og/<slug>.png is the project's mockup cropped to 1200x630.
+                        image: existsSync(resolve(root, "public/og", `${project.slug}.png`))
+                            ? `${SITE_URL}/og/${project.slug}.png`
+                            : undefined,
                     }),
                 );
             }
